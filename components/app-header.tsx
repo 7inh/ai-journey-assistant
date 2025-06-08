@@ -48,7 +48,7 @@ export default function AppHeader() {
         className={cn(
           "relative",
           "flex items-center gap-1 sm:gap-2 px-2 sm:px-4 md:px-6 dark:border-neutral-800",
-          isSettingsPage ? "h-12 py-0" : "h-16 py-4"
+          isSettingsPage ? "h-12 py-0" : "h-16 py-3" // Reduced padding from py-4 to py-3 to accommodate larger avatar
         )}
       >
         <div className="absolute inset-0 bg-background/80 backdrop-blur-md border-b border-border/40 dark:bg-background/70 dark:border-border/30"></div>
