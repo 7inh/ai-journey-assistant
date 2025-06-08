@@ -90,7 +90,7 @@ export default function ExploreAgentCard({
         <CardHeader className="p-0 relative">
           <div className="aspect-[16/9] w-full relative overflow-hidden rounded-t-lg">
             <Image
-              src={agent.bannerImageUrl || `/placeholder.svg?width=400&height=225&query=AI+Agent+${agent.name}`}
+              src={agent.bannerImageUrl || `https://picsum.photos/seed/${agent.id}-banner/400/225`}
               alt={`${agent.name} banner`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -110,7 +110,7 @@ export default function ExploreAgentCard({
         <CardContent className="pt-4 flex-grow">
           <div className="flex items-start gap-3">
             <Image
-              src={agent.avatarUrl || `/placeholder.svg?width=40&height=40&query=${agent.name.charAt(0)}`}
+              src={agent.avatarUrl || `https://picsum.photos/seed/${agent.id}-avatar/40/40`}
               alt={agent.name}
               width={40}
               height={40}

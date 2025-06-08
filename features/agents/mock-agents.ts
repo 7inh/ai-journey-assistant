@@ -10,9 +10,8 @@ export const mockAgents: Agent[] = [
       "Journey Master Pro is an advanced AI agent designed to help you tackle your most ambitious projects. Whether you're launching a new product, planning a research paper, or organizing a large event, Journey Master Pro provides a structured approach. It intelligently analyzes your goals, suggests optimal phases, and helps you define detailed tasks for each phase. With its intuitive interface and powerful planning capabilities, you'll stay organized and on track from start to finish. It can also adapt to changes and help you re-plan on the fly.",
     bannerSlogan:
       "Master your most complex projects with AI-driven planning and execution.",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-VfQF9gTOGCEdT3SdvyGdLFkQOCTqio.png",
+    avatarUrl: "https://picsum.photos/seed/journey-master/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/journey-master-banner/1200/400",
     tags: [
       "project management",
       "planning",
@@ -94,8 +93,8 @@ export const mockAgents: Agent[] = [
     longDescription:
       "Code Assistant X is your go-to AI for all things coding. It understands context, suggests completions, helps identify bugs, and can even refactor your code for better performance and readability. Supports Python, JavaScript, Java, C++, and more. Integrates with popular IDEs.",
     bannerSlogan: "Write better code, faster. Your AI pair programmer.",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/code-assistant/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/code-banner/1200/400",
     tags: ["coding", "development", "debugger", "optimizer", "IDE", "Popular"],
     isInstalled: false,
     version: "1.5.2",
@@ -134,8 +133,8 @@ export const mockAgents: Agent[] = [
       "Unleash your imagination. AI assistant for brainstorming, story writing, and content creation.",
     longDescription:
       "Creative Writer GPT helps you overcome writer's block, generate plot ideas, develop characters, and even draft entire sections of text. Perfect for novelists, screenwriters, marketers, and anyone who needs a creative spark.",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/creative-writer/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/creative-banner/1200/400",
     tags: [
       "writing",
       "content creation",
@@ -164,8 +163,8 @@ export const mockAgents: Agent[] = [
       "Transform raw data into actionable insights. Supports CSV, Excel, and database connections.",
     longDescription:
       "Data Analyzer Pro simplifies complex data analysis. Upload your datasets, and let the AI help you identify trends, generate visualizations, and create comprehensive reports. No coding required, but offers advanced options for data scientists.",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/data-analyzer/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/data-banner/1200/400",
     tags: [
       "data analysis",
       "visualization",
@@ -194,8 +193,8 @@ export const mockAgents: Agent[] = [
       "Learn new languages with a personalized AI tutor. Interactive lessons, pronunciation practice, and cultural insights.",
     longDescription:
       "Language Tutor AI offers a dynamic and engaging way to learn Spanish, French, German, Japanese, and more. Practice conversations, get instant feedback on your pronunciation, and explore cultural nuances. Tailored lesson plans adapt to your progress.",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/language-tutor/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/language-banner/1200/400",
     tags: ["language learning", "education", "tutoring", "pronunciation"],
     isInstalled: false,
     version: "1.2.0",
@@ -232,8 +231,8 @@ export const mockAgents: Agent[] = [
     longDescription:
       "Fitness Coach Pro creates personalized workout routines based on your goals, equipment, and fitness level. Get expert nutrition guidance, track your progress, and stay motivated with AI-powered feedback. Perfect for beginners and fitness enthusiasts alike.",
     bannerSlogan: "Transform your body with AI-powered fitness coaching",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/fitness-coach/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/fitness-banner/1200/400",
     tags: ["fitness", "health", "workout", "nutrition", "Trending"],
     isInstalled: false,
     version: "2.0.1",
@@ -274,8 +273,8 @@ export const mockAgents: Agent[] = [
     longDescription:
       "Recipe Genius helps you create delicious meals from whatever you have in your pantry. Simply list your available ingredients, dietary preferences, and cooking time, and get customized recipes with step-by-step instructions. Includes options for various cuisines and dietary restrictions.",
     bannerSlogan: "Never waste ingredients again. Cook smart with AI.",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/recipe-genius/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/recipe-banner/1200/400",
     tags: ["cooking", "recipes", "food", "meal planning", "Popular"],
     isInstalled: false,
     version: "1.3.0",
@@ -302,8 +301,8 @@ export const mockAgents: Agent[] = [
     longDescription:
       "Meditation Master provides personalized mindfulness practices to reduce stress, improve focus, and enhance overall wellbeing. Whether you're a beginner or experienced practitioner, this AI creates custom sessions ranging from quick 5-minute breaks to deep 30-minute meditations.",
     bannerSlogan: "Find your inner peace with AI-guided mindfulness",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/meditation/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/meditation-banner/1200/400",
     tags: [
       "meditation",
       "mindfulness",
@@ -343,8 +342,8 @@ export const mockAgents: Agent[] = [
     longDescription:
       "Travel Planner AI takes the stress out of trip planning by creating detailed itineraries based on your interests, budget, and travel style. Get insider tips on hidden gems, optimize your route to save time, and receive real-time updates on local events and weather conditions.",
     bannerSlogan: "Your personal travel agent powered by AI",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/travel-planner/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/travel-banner/1200/400",
     tags: ["travel", "itinerary", "vacation", "budget", "Trending"],
     isInstalled: false,
     version: "2.1.1",
@@ -380,8 +379,8 @@ export const mockAgents: Agent[] = [
     longDescription:
       "Study Buddy AI helps students of all ages master difficult subjects through personalized learning paths. Get step-by-step explanations for complex problems, generate practice quizzes, and review material with spaced repetition techniques for optimal retention.",
     bannerSlogan: "Learn smarter, not harder, with your AI tutor",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/study-buddy/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/study-banner/1200/400",
     tags: ["education", "tutoring", "learning", "exam prep", "Popular"],
     isInstalled: false,
     version: "3.2.0",
@@ -422,8 +421,8 @@ export const mockAgents: Agent[] = [
     longDescription:
       "Finance Advisor Pro helps you take control of your finances through smart budgeting, expense tracking, and personalized investment strategies. Set financial goals, track your progress, and receive actionable advice to improve your financial health.",
     bannerSlogan: "Your path to financial freedom starts with AI",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/finance-advisor/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/finance-banner/1200/400",
     tags: [
       "finance",
       "budgeting",
@@ -464,8 +463,8 @@ export const mockAgents: Agent[] = [
     longDescription:
       "Music Composer AI helps musicians and non-musicians alike create original compositions in any genre. Generate melodies based on your mood, arrange multiple instrument tracks, and export your creations to MIDI, MP3, or sheet music.",
     bannerSlogan: "Unleash your musical creativity with AI",
-    avatarUrl: "/placeholder.svg?width=80&height=80",
-    bannerImageUrl: "/placeholder.svg?width=1200&height=400",
+    avatarUrl: "https://picsum.photos/seed/music-composer/80/80",
+    bannerImageUrl: "https://picsum.photos/seed/music-banner/1200/400",
     tags: ["music", "composition", "creativity", "audio", "Trending"],
     isInstalled: false,
     version: "1.5.0",
