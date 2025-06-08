@@ -45,7 +45,7 @@ export default function AppHeader() {
   return (
     <header
       className={cn(
-        "sticky top-0 flex border-b items-center gap-1 sm:gap-2 bg-background px-2 sm:px-4 md:px-6 dark:border-neutral-800",
+        "sticky top-0 flex border-b items-center gap-1 sm:gap-2 bg-background/95 backdrop-blur-sm px-2 sm:px-4 md:px-6 dark:border-neutral-800",
         isExplorePage ? "z-40" : "z-10",
         isSettingsPage ? "h-12 py-0" : "h-16 py-4"
       )}

@@ -1,12 +1,18 @@
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useHeader } from "@/contexts/header-context";
 import type { Agent } from "@/interfaces";
 
 export function usePageTitle(agentsData: Agent[]) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { overrideTitle } = useHeader();
 
   const getPageTitle = () => {
+    // Check for search query in explore page
+    if (pathname === "/explore" && searchParams.get("q")) {
+      return `Search: ${searchParams.get("q")}`;
+    }
+
     if (pathname === "/explore/top-free") return "Top Free Agents";
     if (pathname === "/explore/top-paid") return "Top Paid Agents";
     if (pathname === "/") return "AI Assistant";

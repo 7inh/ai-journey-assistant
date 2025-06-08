@@ -69,32 +69,41 @@ export default function ExplorePage() {
           </>
         )}
 
-        {(searchTermFromUrl || !searchTermFromUrl) && (
+        {searchTermFromUrl && (
           <>
             <Separator className="my-10" />
             <h2 className="text-3xl font-bold tracking-tight mb-8">
-              {searchTermFromUrl
-                ? `Results for "${searchTermFromUrl}"`
-                : "All Agents"}
+              Results for "{searchTermFromUrl}"
             </h2>
-            <TopAgentsList
-              agents={topFreeAgents}
+            <ExploreSearchResults
+              isSearching={isSearching}
+              agents={agentsToDisplay}
+              searchTerm={searchTermFromUrl}
               onInstall={handleInstallAgent}
-              installingAgentId={installingAgentId}
               isInstallPending={isInstallPending}
+              installingAgentId={installingAgentId}
+              onClearSearch={clearSearch}
             />
           </>
         )}
 
-        <ExploreSearchResults
-          isSearching={isSearching}
-          agents={agentsToDisplay}
-          searchTerm={searchTermFromUrl}
-          onInstall={handleInstallAgent}
-          isInstallPending={isInstallPending}
-          installingAgentId={installingAgentId}
-          onClearSearch={clearSearch}
-        />
+        {!searchTermFromUrl && (
+          <>
+            <Separator className="my-10" />
+            <h2 className="text-3xl font-bold tracking-tight mb-8">
+              All Agents
+            </h2>
+            <ExploreSearchResults
+              isSearching={false}
+              agents={agentsToDisplay}
+              searchTerm=""
+              onInstall={handleInstallAgent}
+              isInstallPending={isInstallPending}
+              installingAgentId={installingAgentId}
+              onClearSearch={clearSearch}
+            />
+          </>
+        )}
       </div>
     </>
   );
