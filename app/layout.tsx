@@ -1,39 +1,40 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css" // Keep this for global styles
-import { ThemeProvider } from "@/components/theme-provider"
-import { ThemeContextProvider } from "@/contexts/theme-context"
-import { SidebarProvider } from "@/components/ui/sidebar"
-import AppSidebar from "@/components/app-sidebar"
-import AppHeader from "@/components/app-header"
-import { Toaster } from "@/components/ui/toaster"
-import { cookies } from "next/headers"
-import { HeaderProvider } from "@/contexts/header-context"
-import { ConfirmationProvider } from "@/contexts/confirmation-context"
-import ConfirmationDialog from "@/components/ui/confirmation-dialog"
-import { cn } from "@/lib/utils"
-import { createProviderCompose } from "@/lib/provider-composer"
-import BrowserInitor from "@/lib/browser-init" // Import BrowserInitor
-import NextTopLoader from "nextjs-toploader"
+import type React from "react";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css"; // Keep this for global styles
+import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeContextProvider } from "@/contexts/theme-context";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import AppSidebar from "@/components/app-sidebar";
+import AppHeader from "@/components/app-header";
+import { Toaster } from "@/components/ui/toaster";
+import { cookies } from "next/headers";
+import { HeaderProvider } from "@/contexts/header-context";
+import { ConfirmationProvider } from "@/contexts/confirmation-context";
+import ConfirmationDialog from "@/components/ui/confirmation-dialog";
+import { cn } from "@/lib/utils";
+import BrowserInitor from "@/lib/browser-init"; // Import BrowserInitor
+import NextTopLoader from "nextjs-toploader";
+import { createProviderCompose } from "@/lib/provider-composer";
 // import { CartProvider } from "@/contexts/cart-context"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "AI Journey Assistant",
   description: "Manage your tasks and journeys with an AI assistant.",
-    generator: 'v0.dev'
-}
+  generator: "v0.dev",
+};
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
-  const cookieStore = cookies()
-  const sidebarOpenCookie = cookieStore.get("sidebar:state")?.value
-  const defaultSidebarOpen = sidebarOpenCookie === undefined ? true : sidebarOpenCookie === "true"
+  const cookieStore = await cookies();
+  const sidebarOpenCookie = cookieStore.get("sidebar:state")?.value;
+  const defaultSidebarOpen =
+    sidebarOpenCookie === undefined ? true : sidebarOpenCookie === "true";
 
   const AppProviders = createProviderCompose()
     .add(BrowserInitor) // Add BrowserInitor to the composition
@@ -48,7 +49,7 @@ export default function RootLayout({
     .add(HeaderProvider)
     .add(ConfirmationProvider)
     // .add(CartProvider)
-    .compose()
+    .compose();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -77,5 +78,5 @@ export default function RootLayout({
         </AppProviders>
       </body>
     </html>
-  )
+  );
 }
