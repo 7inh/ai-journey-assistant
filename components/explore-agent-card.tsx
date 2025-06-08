@@ -1,22 +1,34 @@
-"use client"
+"use client";
 
-import type React from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import RatingStars from "@/components/ui/rating-stars"
-import { CheckCircle, Download, Palette, Briefcase, ExternalLink } from "lucide-react"
-import type { Agent } from "@/interfaces"
-import { cn } from "@/lib/utils"
-import { Spinner } from "@/components/ui/spinner"
+import type React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import RatingStars from "@/components/ui/rating-stars";
+import {
+  CheckCircle,
+  Download,
+  Palette,
+  Briefcase,
+  ExternalLink,
+} from "lucide-react";
+import type { Agent } from "@/interfaces";
+import { cn } from "@/lib/utils";
+import { Spinner } from "@/components/ui/spinner";
 
 interface ExploreAgentCardProps {
-  agent: Agent
-  onInstall: (agentId: string) => Promise<void> // "Install" now means activate/enable
-  className?: string
-  isInstallPending?: boolean
+  agent: Agent;
+  onInstall: (agentId: string) => Promise<void>;
+  className?: string;
+  isInstallPending?: boolean;
 }
 
 export default function ExploreAgentCard({
@@ -26,71 +38,92 @@ export default function ExploreAgentCard({
   isInstallPending = false,
 }: ExploreAgentCardProps) {
   const handleCardAction = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    if (isInstallPending || agent.isInstalled || agent.billingType === "contact-sales") return
+    e.preventDefault();
+    e.stopPropagation();
+    if (
+      isInstallPending ||
+      agent.isInstalled ||
+      agent.billingType === "contact-sales"
+    )
+      return;
 
-    // For free or pay-as-you-go agents, "install" means activate.
-    await onInstall(agent.id)
-  }
+    await onInstall(agent.id);
+  };
 
-  let buttonText = "Details"
-  let ButtonIcon: React.ElementType = CheckCircle
-  let buttonVariant: "default" | "secondary" | "outline" = "default"
-  let actionDisabled = false
-  let titleAction = `View details for ${agent.name}`
+  // Determine button properties based on agent state
+  const buttonConfig = (() => {
+    if (isInstallPending) {
+      return {
+        text: "Processing...",
+        icon: Spinner,
+        variant: "default" as const,
+        disabled: true,
+        titleAction: "Processing activation...",
+      };
+    }
 
-  if (isInstallPending) {
-    buttonText = "Processing..."
-    ButtonIcon = Spinner
-    actionDisabled = true
-    titleAction = "Processing activation..."
-  } else if (agent.isInstalled) {
-    buttonText = "Active" // Changed from "Installed"
-    ButtonIcon = CheckCircle
-    buttonVariant = "secondary"
-    actionDisabled = true
-    titleAction = `${agent.name} is active`
-  } else {
+    if (agent.isInstalled) {
+      return {
+        text: "Active",
+        icon: CheckCircle,
+        variant: "secondary" as const,
+        disabled: true,
+        titleAction: `${agent.name} is active`,
+      };
+    }
+
     switch (agent.billingType) {
       case "free":
-        buttonText = "Activate" // Changed from "Get"
-        ButtonIcon = Download
-        buttonVariant = "default"
-        titleAction = `Activate ${agent.name} for free`
-        break
+        return {
+          text: "Activate",
+          icon: Download,
+          variant: "default" as const,
+          disabled: false,
+          titleAction: `Activate ${agent.name} for free`,
+        };
       case "pay-as-you-go":
-        buttonText = "Activate"
-        ButtonIcon = Briefcase // Or another icon representing usage
-        buttonVariant = "default"
-        titleAction = `Activate ${agent.name} (Pay-as-you-go)`
-        break
+        return {
+          text: "Activate",
+          icon: Briefcase,
+          variant: "default" as const,
+          disabled: false,
+          titleAction: `Activate ${agent.name} (Pay-as-you-go)`,
+        };
       case "contact-sales":
-        buttonText = "Contact Sales"
-        ButtonIcon = ExternalLink
-        buttonVariant = "outline"
-        actionDisabled = true // Or link to a contact page
-        titleAction = `Contact sales for ${agent.name}`
-        break
+        return {
+          text: "Contact Sales",
+          icon: ExternalLink,
+          variant: "outline" as const,
+          disabled: true,
+          titleAction: `Contact sales for ${agent.name}`,
+        };
       default:
-        buttonText = "Details"
-        actionDisabled = true
-        break
+        return {
+          text: "Details",
+          icon: ExternalLink,
+          variant: "default" as const,
+          disabled: true,
+          titleAction: `View details for ${agent.name}`,
+        };
     }
-  }
+  })();
 
   return (
-    <Link href={`/explore/${agent.id}`} className="block group">
+    <Link href={`/explore/${agent.id}`} className="block group h-full">
       <Card
         className={cn(
           "h-full flex flex-col transition-all duration-200 ease-in-out group-hover:shadow-xl dark:group-hover:shadow-primary/20",
-          className,
+          className
         )}
       >
-        <CardHeader className="p-0 relative">
-          <div className="aspect-[16/9] w-full relative overflow-hidden rounded-t-lg">
+        {/* Fixed-height banner area */}
+        <CardHeader className="p-0 relative h-32 md:h-40">
+          <div className="w-full h-full relative overflow-hidden rounded-t-lg">
             <Image
-              src={agent.bannerImageUrl || `https://picsum.photos/seed/${agent.id}-banner/400/225`}
+              src={
+                agent.bannerImageUrl ||
+                `https://picsum.photos/seed/${agent.id}-banner/400/225`
+              }
               alt={`${agent.name} banner`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -98,63 +131,97 @@ export default function ExploreAgentCard({
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
           </div>
-          <div className="absolute bottom-0 left-0 p-3 sm:p-4">
-            {agent.category && (
-              <Badge variant="secondary" className="text-xs backdrop-blur-sm bg-black/30 text-white">
+          {agent.category && (
+            <div className="absolute bottom-0 left-0 p-3 sm:p-4">
+              <Badge
+                variant="secondary"
+                className="text-xs backdrop-blur-sm bg-black/30 text-white"
+              >
                 <Palette size={12} className="mr-1" />
                 {agent.category}
               </Badge>
-            )}
-          </div>
+            </div>
+          )}
         </CardHeader>
-        <CardContent className="pt-4 flex-grow">
-          <div className="flex items-start gap-3">
-            <Image
-              src={agent.avatarUrl || `https://picsum.photos/seed/${agent.id}-avatar/40/40`}
-              alt={agent.name}
-              width={40}
-              height={40}
-              className="rounded-md border"
-            />
-            <div className="flex-1">
-              <CardTitle className="text-base sm:text-lg leading-tight group-hover:text-primary">
-                {agent.name}
-              </CardTitle>
-              {agent.developerName && <p className="text-xs text-muted-foreground mt-0.5">By {agent.developerName}</p>}
+
+        {/* Flexible content area with minimum height */}
+        <CardContent className="pt-4 pb-0 flex-grow flex flex-col justify-between min-h-[140px]">
+          <div className="space-y-2">
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-10 h-10 relative">
+                <Image
+                  src={
+                    agent.avatarUrl ||
+                    `https://picsum.photos/seed/${agent.id}-avatar/40/40`
+                  }
+                  alt={agent.name}
+                  fill
+                  className="rounded-md border object-cover"
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-base sm:text-lg leading-tight group-hover:text-primary truncate">
+                  {agent.name}
+                </CardTitle>
+                {agent.developerName && (
+                  <p className="text-xs text-muted-foreground mt-0.5 truncate">
+                    By {agent.developerName}
+                  </p>
+                )}
+              </div>
+            </div>
+            <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
+              {agent.description}
+            </p>
+          </div>
+
+          {agent.averageRating !== undefined &&
+            agent.ratingCount !== undefined &&
+            agent.ratingCount > 0 && (
+              <div className="flex items-center gap-1 mt-2">
+                <RatingStars rating={agent.averageRating} size={14} />
+                <span className="text-xs text-muted-foreground">
+                  ({agent.ratingCount})
+                </span>
+              </div>
+            )}
+        </CardContent>
+
+        {/* Fixed-height footer */}
+        <CardFooter className="pt-3 pb-4 mt-auto">
+          <div className="w-full">
+            <Button
+              variant={buttonConfig.variant}
+              size="sm"
+              className="w-full"
+              onClick={handleCardAction}
+              disabled={buttonConfig.disabled}
+              aria-label={buttonConfig.titleAction}
+            >
+              {isInstallPending ? (
+                <Spinner className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <buttonConfig.icon className="mr-2 h-4 w-4" />
+              )}
+              {buttonConfig.text}
+            </Button>
+
+            {/* Consistent pricing display */}
+            <div className="h-5 mt-1">
+              {agent.billingType === "pay-as-you-go" && (
+                <p className="text-xs text-muted-foreground text-center">
+                  Usage-based pricing
+                </p>
+              )}
+              {agent.billingType === "contact-sales" && (
+                <p className="text-xs text-muted-foreground text-center">
+                  Enterprise pricing
+                </p>
+              )}
             </div>
           </div>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-2 line-clamp-2">{agent.description}</p>
-          {agent.averageRating !== undefined && agent.ratingCount !== undefined && agent.ratingCount > 0 && (
-            <div className="flex items-center gap-1 mt-2">
-              <RatingStars rating={agent.averageRating} size={14} />
-              <span className="text-xs text-muted-foreground">({agent.ratingCount})</span>
-            </div>
-          )}
-        </CardContent>
-        <CardFooter className="pt-3 pb-4 flex-col items-center">
-          <Button
-            variant={buttonVariant}
-            size="sm"
-            className="w-full"
-            onClick={handleCardAction}
-            disabled={actionDisabled}
-            aria-label={titleAction}
-          >
-            {isInstallPending ? (
-              <Spinner className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <ButtonIcon className="mr-2 h-4 w-4" />
-            )}
-            {buttonText}
-          </Button>
-          {agent.billingType === "pay-as-you-go" && (
-            <p className="text-xs text-muted-foreground mt-1">Usage-based pricing</p>
-          )}
-          {agent.billingType === "contact-sales" && (
-            <p className="text-xs text-muted-foreground mt-1">Enterprise pricing</p>
-          )}
         </CardFooter>
       </Card>
     </Link>
-  )
+  );
 }
