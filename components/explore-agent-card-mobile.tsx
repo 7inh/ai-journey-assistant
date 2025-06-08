@@ -1,13 +1,12 @@
 "use client";
 
-import type React from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Download, Briefcase, ExternalLink } from "lucide-react";
+import { Spinner } from "@/components/ui/spinner";
 import type { Agent } from "@/interfaces";
 import { cn } from "@/lib/utils";
-import { Spinner } from "@/components/ui/spinner";
+import Image from "next/image";
+import Link from "next/link";
+import type React from "react";
 
 interface ExploreAgentCardMobileProps {
   agent: Agent;
@@ -16,6 +15,8 @@ interface ExploreAgentCardMobileProps {
   isInstallPending?: boolean;
   featuredText?: string;
   portrait?: boolean; // New parameter to control card orientation
+  minWidth?: string | number; // New parameter for minimum width
+  maxHeight?: string | number; // Add maxHeight parameter
 }
 
 export default function ExploreAgentCardMobile({
@@ -25,6 +26,8 @@ export default function ExploreAgentCardMobile({
   isInstallPending = false,
   featuredText = "FEATURED TODAY",
   portrait = true, // Default to portrait mode
+  minWidth = "280px",
+  maxHeight,
 }: ExploreAgentCardMobileProps) {
   const handleCardAction = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -76,15 +79,19 @@ export default function ExploreAgentCardMobile({
   }
 
   return (
-    <Link href={`/explore/${agent.id}`} className="block group">
+    <Link href={`/explore/${agent.id}`} className="block group h-full">
       <div
         className={cn(
           "relative rounded-lg overflow-hidden",
-          // Apply different aspect ratios based on portrait mode
-          portrait ? "aspect-[3/4]" : "aspect-[5/2.5]",
+          // Force portrait aspect ratio regardless of container constraints
+          "aspect-[3/4]",
           "w-full",
           className
         )}
+        style={{
+          minWidth: minWidth,
+          ...(maxHeight ? { maxHeight, height: "100%" } : {}),
+        }}
       >
         {/* Background Image */}
         <Image

@@ -14,6 +14,7 @@ interface AgentSubSectionProps {
   className?: string;
   cardClassName?: string;
   scrollable?: boolean;
+  displayCardType?: "regular" | "mobile" | "mixed"; // New prop
 }
 
 export default function AgentSubSection({
@@ -25,6 +26,7 @@ export default function AgentSubSection({
   className,
   cardClassName,
   scrollable = false,
+  displayCardType = "mixed", // Default to mixed if not specified
 }: AgentSubSectionProps) {
   if (!agents || agents.length === 0) {
     return null; // Or some placeholder if needed
@@ -39,11 +41,16 @@ export default function AgentSubSection({
     // Create the mapping when agents change
     const newCardTypeMap: Record<string, "regular" | "mobile"> = {};
     agents.forEach((agent) => {
-      // Randomly assign card type - 50/50 chance
-      newCardTypeMap[agent.id] = Math.random() > 0.5 ? "regular" : "mobile";
+      if (displayCardType === "mixed") {
+        // Only randomize if displayCardType is "mixed"
+        newCardTypeMap[agent.id] = Math.random() > 0.5 ? "regular" : "mobile";
+      } else {
+        // Otherwise, use the specified displayCardType
+        newCardTypeMap[agent.id] = displayCardType;
+      }
     });
     setCardTypeMap(newCardTypeMap);
-  }, [agents]);
+  }, [agents, displayCardType]);
 
   const content = (
     <div
