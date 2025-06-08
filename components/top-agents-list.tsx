@@ -27,14 +27,6 @@ export default function TopAgentsList({
 
   const topAgents = agents.slice(0, maxItems);
 
-  const columnCount = 3;
-  const itemsPerColumn = Math.ceil(topAgents.length / columnCount);
-  const columns: Agent[][] = Array.from({ length: columnCount }, () => []);
-
-  topAgents.forEach((agent, index) => {
-    columns[index % columnCount].push(agent);
-  });
-
   return (
     <section className="mb-12">
       <div className="flex justify-between items-center mb-4">
@@ -46,22 +38,20 @@ export default function TopAgentsList({
           See All
         </Link>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 md:gap-x-8">
-        {columns.map((column, colIndex) => (
-          <div key={colIndex} className="flex flex-col">
-            {column.map((agent, agentIndex) => (
-              <React.Fragment key={agent.id}>
-                <TopAgentListItem
-                  agent={agent}
-                  rank={colIndex * itemsPerColumn + agentIndex + 1}
-                  onInstall={onInstall}
-                  isInstallPending={
-                    isInstallPending && installingAgentId === agent.id
-                  }
-                />
-                {agentIndex < column.length - 1 && <Separator />}
-              </React.Fragment>
-            ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {topAgents.map((agent, index) => (
+          <div key={agent.id} className="flex flex-col">
+            <TopAgentListItem
+              agent={agent}
+              rank={index + 1}
+              onInstall={onInstall}
+              isInstallPending={
+                isInstallPending && installingAgentId === agent.id
+              }
+            />
+            {index < topAgents.length - 1 && (
+              <Separator className="sm:hidden mt-4" />
+            )}
           </div>
         ))}
       </div>
