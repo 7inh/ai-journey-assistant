@@ -26,7 +26,7 @@ export default function AppHeader() {
 
   if (!mounted) {
     return (
-      <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 dark:border-neutral-800">
+      <header className="sticky top-0 z-10 flex h-16 items-center gap-4 bg-background px-4 md:px-6 dark:border-neutral-800">
         <div className="h-6 w-6 animate-pulse rounded-md bg-muted md:hidden" />
         <div className="flex-1 h-6 animate-pulse rounded-md bg-muted" />
         <div className="flex items-center gap-2 md:gap-4">
@@ -43,75 +43,79 @@ export default function AppHeader() {
   const isExplorePage = pathname === "/explore" && !isAgentDetailPage;
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 flex border-b items-center gap-1 sm:gap-2 bg-background/95 backdrop-blur-sm px-2 sm:px-4 md:px-6 dark:border-neutral-800",
-        isExplorePage ? "z-40" : "z-10",
-        isSettingsPage ? "h-12 py-0" : "h-16 py-4"
-      )}
-    >
-      <div className="flex w-full items-center gap-1 sm:gap-2">
-        <div className="flex items-center gap-1 flex-shrink-0">
-          <SidebarTrigger className="md:hidden flex-shrink-0" />
-          {!isMobile && sidebarDesktopState === "collapsed" && (
-            <SidebarTrigger
-              className="flex-shrink-0"
-              aria-label="Open sidebar"
-            />
-          )}
-          {isAgentDetailPage && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => router.back()}
-              className="rounded-full h-9 w-9 flex-shrink-0"
-              aria-label="Go back"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          )}
+    <header className={cn("sticky top-0", isExplorePage ? "z-40" : "z-10")}>
+      <div
+        className={cn(
+          "relative",
+          "flex items-center gap-1 sm:gap-2 px-2 sm:px-4 md:px-6 dark:border-neutral-800",
+          isSettingsPage ? "h-12 py-0" : "h-16 py-4"
+        )}
+      >
+        <div className="absolute inset-0 bg-background/80 backdrop-blur-md border-b border-border/40 dark:bg-background/70 dark:border-border/30"></div>
 
-          {/* Show title for settings page here */}
-          {isSettingsPage && (
-            <>
+        <div className="flex w-full items-center gap-1 sm:gap-2 relative">
+          <div className="flex items-center gap-1 flex-shrink-0">
+            <SidebarTrigger className="md:hidden flex-shrink-0" />
+            {!isMobile && sidebarDesktopState === "collapsed" && (
+              <SidebarTrigger
+                className="flex-shrink-0"
+                aria-label="Open sidebar"
+              />
+            )}
+            {isAgentDetailPage && (
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => router.push("/")}
-                className="rounded-full h-8 w-8 flex-shrink-0 mr-1"
-                aria-label="Back to main page"
+                onClick={() => router.back()}
+                className="rounded-full h-9 w-9 flex-shrink-0"
+                aria-label="Go back"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ArrowLeft className="h-5 w-5" />
               </Button>
-              <h1
-                className="text-lg font-semibold p-1 h-auto truncate translate-y-0.5"
-                title="Settings"
-              >
-                Settings
-              </h1>
-            </>
-          )}
-        </div>
+            )}
 
-        <div
-          className={cn(
-            "min-w-0 flex-1 flex justify-center items-center",
-            isExplorePage ||
-              isAgentDetailPage ||
-              (!isMobile && sidebarDesktopState === "expanded") ||
-              isMobile
-              ? "sm:justify-start"
-              : isSettingsPage
-              ? "justify-center"
-              : "sm:justify-center"
-          )}
-        >
-          <HeaderTitle />
-          {pageControls && <div className="ml-auto">{pageControls}</div>}
-        </div>
+            {/* Show title for settings page here */}
+            {isSettingsPage && (
+              <>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => router.push("/")}
+                  className="rounded-full h-8 w-8 flex-shrink-0 mr-1"
+                  aria-label="Back to main page"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </Button>
+                <h1
+                  className="text-lg font-semibold p-1 h-auto truncate translate-y-0.5"
+                  title="Settings"
+                >
+                  Settings
+                </h1>
+              </>
+            )}
+          </div>
 
-        <div className="flex items-center gap-1 sm:gap-2 md:gap-4 flex-shrink-0">
-          <UserMenu isCompact={isSettingsPage} />
+          <div
+            className={cn(
+              "min-w-0 flex-1 flex justify-center items-center",
+              isExplorePage ||
+                isAgentDetailPage ||
+                (!isMobile && sidebarDesktopState === "expanded") ||
+                isMobile
+                ? "sm:justify-start"
+                : isSettingsPage
+                ? "justify-center"
+                : "sm:justify-center"
+            )}
+          >
+            <HeaderTitle />
+            {pageControls && <div className="ml-auto">{pageControls}</div>}
+          </div>
+
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-4 flex-shrink-0">
+            <UserMenu isCompact={isSettingsPage} />
+          </div>
         </div>
       </div>
     </header>

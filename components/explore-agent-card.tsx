@@ -195,18 +195,21 @@ export default function ExploreAgentCard({
               {buttonConfig.text}
             </Button>
 
-            <div className="h-5">
-              {agent.billingType === "pay-as-you-go" && (
-                <p className="text-xs text-muted-foreground text-center">
-                  Usage-based pricing
-                </p>
-              )}
-              {agent.billingType === "contact-sales" && (
-                <p className="text-xs text-muted-foreground text-center">
-                  Enterprise pricing
-                </p>
-              )}
-            </div>
+            {(agent.billingType === "pay-as-you-go" ||
+              agent.billingType === "contact-sales") && (
+              <div className="h-5">
+                {agent.billingType === "pay-as-you-go" && (
+                  <p className="text-xs text-muted-foreground text-center">
+                    Usage-based pricing
+                  </p>
+                )}
+                {agent.billingType === "contact-sales" && (
+                  <p className="text-xs text-muted-foreground text-center">
+                    Enterprise pricing
+                  </p>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

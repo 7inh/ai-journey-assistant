@@ -22,6 +22,7 @@ export const ExploreSearch = memo(function ExploreSearch() {
     loadMoreResults,
     hasMoreResults,
     isLoadingMore,
+    clearSearch,
   } = useExploreSearch();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,11 +39,20 @@ export const ExploreSearch = memo(function ExploreSearch() {
       e.preventDefault();
       navigateToSearchPage();
     }
+
+    // Check if backspace or delete is emptying the input
+    if (
+      (e.key === "Backspace" || e.key === "Delete") &&
+      exploreSearchTerm.length === 1
+    ) {
+      // Reset the whole search state including the URL
+      clearSearch();
+    }
   };
 
-  // Clear search input
+  // Clear search input and reset URL
   const handleClearSearch = () => {
-    handleSearchChange("");
+    clearSearch();
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -84,7 +94,7 @@ export const ExploreSearch = memo(function ExploreSearch() {
         <Input
           type="search"
           placeholder="Search agents..."
-          className="w-full pl-9 pr-9 h-10 rounded-md text-sm bg-muted/50 border-border focus-visible:ring-primary focus-visible:ring-offset-0"
+          className="w-full pl-9 pr-9 h-10 rounded-md text-sm bg-muted/50 border-border focus-visible:ring-primary focus-visible:ring-offset-0 [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden [&::-ms-clear]:hidden [&::-ms-reveal]:hidden"
           value={exploreSearchTerm}
           onChange={(e) => handleSearchChange(e.target.value)}
           onKeyDown={handleKeyDown}

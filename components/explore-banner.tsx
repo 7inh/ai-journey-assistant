@@ -44,7 +44,7 @@ export default function ExploreBanner({ featuredAgent }: ExploreBannerProps) {
 
   return (
     <Link href={`/explore/${featuredAgent.id}`} className="block group">
-      <div className="-translate-y-20  relative h-[300px] md:h-[400px] lg:h-[480px] overflow-hidden shadow-2xl">
+      <div className="-translate-y-20 relative h-[300px] md:h-[400px] lg:h-[480px] overflow-hidden shadow-2xl">
         <Image
           src={
             featuredAgent.bannerImageUrl ||

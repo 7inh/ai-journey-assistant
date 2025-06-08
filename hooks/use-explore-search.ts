@@ -140,6 +140,30 @@ export function useExploreSearch() {
     }
   }, []);
 
+  // Clear search completely and reset URL
+  const clearSearch = useCallback(() => {
+    // Clear the input and results
+    setInputValue("");
+    setAllSearchResults([]);
+    setDisplayedResults([]);
+    setShowPopover(false);
+
+    // Only update URL if there's actually a query parameter to remove
+    if (searchParams.has("q")) {
+      // Mark that we're updating the URL programmatically
+      isUrlUpdatePending.current = true;
+      prevQueryRef.current = "";
+
+      // Remove the query parameter and update the URL
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("q");
+      const newUrl = params.toString()
+        ? `${pathname}?${params.toString()}`
+        : pathname;
+      router.push(newUrl);
+    }
+  }, [searchParams, router, pathname]);
+
   // Navigate to search results page and update URL
   const navigateToSearchPage = useCallback(() => {
     if (!inputValue.trim()) return;
@@ -175,5 +199,6 @@ export function useExploreSearch() {
     loadMoreResults,
     hasMoreResults,
     isLoadingMore,
+    clearSearch,
   };
 }
