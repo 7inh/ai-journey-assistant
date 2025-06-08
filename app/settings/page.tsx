@@ -1,26 +1,14 @@
-import { UsageVisualizationSection } from "@/components/settings/usage-visualization-section";
-import { UsageStatisticsSection } from "@/components/settings/usage-statistics-section";
-import { StorageManagementSection } from "@/components/settings/storage-management-section";
-import { PaymentTransactionHistorySection } from "@/components/settings/payment-transaction-history-section";
-import { UserAgentInteractionStats } from "@/components/settings/user-agent-interaction-stats";
 import { AccountProfile } from "@/components/settings/account-profile";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { Tabs, TabsContent } from "@/components/ui/tabs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { PaymentTransactionHistorySection } from "@/components/settings/payment-transaction-history-section";
+import { StorageManagementSection } from "@/components/settings/storage-management-section";
+import { UsageStatisticsSection } from "@/components/settings/usage-statistics-section";
+import { UsageVisualizationSection } from "@/components/settings/usage-visualization-section";
+import { UserAgentInteractionStats } from "@/components/settings/user-agent-interaction-stats";
 
 // Import mock data
-import { usageStatsData } from "@/mocks/usage-stats";
-import { storageData } from "@/mocks/storage";
 import { paymentTransactions } from "@/mocks/payment-transactions";
+import { storageData } from "@/mocks/storage";
+import { usageStatsData } from "@/mocks/usage-stats";
 
 interface SettingsPageProps {
   searchParams: { tab?: string };
@@ -33,34 +21,28 @@ export default function SettingsPage({ searchParams }: SettingsPageProps) {
   return (
     <div className="container mx-auto px-4 md:px-6 lg:px-8">
       <div className="pt-4">
-        <Tabs
-          defaultValue="account-overview"
-          value={activeTab}
-          className="w-full"
-        >
-          <TabsContent value="account-overview" className="space-y-6">
-            <AccountProfile />
-          </TabsContent>
+        <div className="space-y-6">
+          {activeTab === "account-overview" && <AccountProfile />}
 
-          <TabsContent value="interaction-stats">
-            <UserAgentInteractionStats />
-          </TabsContent>
+          {activeTab === "interaction-stats" && <UserAgentInteractionStats />}
 
-          <TabsContent value="usage-details" className="space-y-6">
-            <UsageVisualizationSection />
-            <UsageStatisticsSection stats={usageStatsData} />
-          </TabsContent>
+          {activeTab === "usage-details" && (
+            <>
+              <UsageVisualizationSection />
+              <UsageStatisticsSection stats={usageStatsData} />
+            </>
+          )}
 
-          <TabsContent value="storage-management">
+          {activeTab === "storage-management" && (
             <StorageManagementSection storage={storageData} />
-          </TabsContent>
+          )}
 
-          <TabsContent value="billing-history">
+          {activeTab === "billing-history" && (
             <PaymentTransactionHistorySection
               transactions={paymentTransactions}
             />
-          </TabsContent>
-        </Tabs>
+          )}
+        </div>
       </div>
     </div>
   );
