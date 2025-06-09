@@ -110,7 +110,7 @@ export function UserMenu({ isCompact = false }: UserMenuProps) {
               Filter sidebar
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent
-              className="bg-background backdrop-blur-xl border border-border/30 shadow-lg rounded-md z-50"
+              className="bg-background border border-border/30 shadow-lg rounded-md z-50"
               sideOffset={2}
               alignOffset={-5}
             >
@@ -119,7 +119,7 @@ export function UserMenu({ isCompact = false }: UserMenuProps) {
                   Activity
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent
-                  className="bg-background backdrop-blur-xl border border-border/30 shadow-lg rounded-md z-50"
+                  className="bg-background border border-border/30 shadow-lg rounded-md z-50"
                   sideOffset={2}
                   alignOffset={-5}
                 >
@@ -147,7 +147,7 @@ export function UserMenu({ isCompact = false }: UserMenuProps) {
                   People
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent
-                  className="bg-background backdrop-blur-xl border border-border/30 shadow-lg rounded-md z-50"
+                  className="bg-background border border-border/30 shadow-lg rounded-md z-50"
                   sideOffset={2}
                   alignOffset={-5}
                 >
@@ -177,7 +177,7 @@ export function UserMenu({ isCompact = false }: UserMenuProps) {
               Tools & settings
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent
-              className="w-56 bg-background backdrop-blur-xl border border-border/30 shadow-lg rounded-md z-50"
+              className="w-56 bg-background border border-border/30 shadow-lg rounded-md z-50"
               sideOffset={2}
               alignOffset={-5}
             >

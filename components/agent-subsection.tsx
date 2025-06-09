@@ -3,7 +3,7 @@ import ExploreAgentCard from "@/components/explore-agent-card";
 import ExploreAgentCardMobile from "@/components/explore-agent-card-mobile";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useLayoutEffect } from "react";
 
 interface AgentSubSectionProps {
   title: string;
@@ -52,6 +52,40 @@ export default function AgentSubSection({
     setCardTypeMap(newCardTypeMap);
   }, [agents, displayCardType]);
 
+  // Create a ref for each card
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  // State to store the maximum height
+  const [maxHeight, setMaxHeight] = useState<number | null>(null);
+
+  // Reset refs array when number of agents changes
+  useEffect(() => {
+    cardRefs.current = cardRefs.current.slice(0, agents.length);
+  }, [agents.length]);
+
+  // Measure heights and set the maximum after rendering
+  useLayoutEffect(() => {
+    if (cardRefs.current.length === 0) return;
+
+    // Reset max height when agents change
+    setMaxHeight(null);
+
+    // Allow a short delay for cards to render their content
+    const timeoutId = setTimeout(() => {
+      const heights = cardRefs.current
+        .filter(Boolean)
+        .map((el) => el?.offsetHeight || 0);
+
+      if (heights.length > 0) {
+        const maxH = Math.max(...heights);
+        if (maxH > 0) {
+          setMaxHeight(maxH);
+        }
+      }
+    }, 50);
+
+    return () => clearTimeout(timeoutId);
+  }, [agents, cardTypeMap]);
+
   const content = (
     <div
       className={cn(
@@ -61,42 +95,62 @@ export default function AgentSubSection({
           : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6" // For grid layout
       )}
     >
-      {agents.map((agent) => {
+      {agents.map((agent, index) => {
         const cardType = cardTypeMap[agent.id] || "regular";
         const isAgentInstallPending =
           isInstallPending && installingAgentId === agent.id;
 
+        const cardStyle = maxHeight ? { height: `${maxHeight}px` } : {};
+
         if (cardType === "mobile") {
           return (
-            <ExploreAgentCardMobile
+            <div
               key={agent.id}
+              ref={(el) => {
+                cardRefs.current[index] = el;
+              }}
+              style={cardStyle}
+              className="flex"
+            >
+              <ExploreAgentCardMobile
+                agent={agent}
+                onInstall={onInstall}
+                className={cn(
+                  scrollable
+                    ? "w-[270px] xs:w-[280px] sm:w-[300px] flex-shrink-0"
+                    : "",
+                  "h-full", // Use h-full to fill parent container
+                  cardClassName
+                )}
+                isInstallPending={isAgentInstallPending}
+                featuredText={`FEATURED ${agent.category || "ASSISTANT"}`}
+              />
+            </div>
+          );
+        }
+
+        return (
+          <div
+            key={agent.id}
+            ref={(el) => {
+              cardRefs.current[index] = el;
+            }}
+            style={cardStyle}
+            className="flex"
+          >
+            <ExploreAgentCard
               agent={agent}
               onInstall={onInstall}
               className={cn(
                 scrollable
                   ? "w-[270px] xs:w-[280px] sm:w-[300px] flex-shrink-0"
                   : "",
+                "h-full", // Use h-full to fill parent container
                 cardClassName
               )}
               isInstallPending={isAgentInstallPending}
-              featuredText={`FEATURED ${agent.category || "ASSISTANT"}`}
             />
-          );
-        }
-
-        return (
-          <ExploreAgentCard
-            key={agent.id}
-            agent={agent}
-            onInstall={onInstall}
-            className={cn(
-              scrollable
-                ? "w-[270px] xs:w-[280px] sm:w-[300px] flex-shrink-0"
-                : "",
-              cardClassName
-            )}
-            isInstallPending={isAgentInstallPending}
-          />
+          </div>
         );
       })}
     </div>
