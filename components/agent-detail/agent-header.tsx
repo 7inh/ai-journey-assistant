@@ -91,7 +91,9 @@ export default function AgentHeader({
           <Image
             src={
               agent.bannerImageUrl ||
-              `/placeholder.svg?width=1200&height=400&query=${agent.name}+Banner`
+              `https://picsum.photos/seed/${encodeURIComponent(
+                agent.name
+              )}-banner/1200/400`
             }
             alt={`${agent.name} banner`}
             fill
@@ -106,9 +108,9 @@ export default function AgentHeader({
           <AvatarImage
             src={
               agent.avatarUrl ||
-              `/placeholder.svg?height=128&width=128&query=${agent.name.charAt(
-                0
-              )}`
+              `https://picsum.photos/seed/${encodeURIComponent(
+                agent.name
+              )}/128/128`
             }
             alt={agent.name}
           />

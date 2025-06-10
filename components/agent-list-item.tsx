@@ -64,9 +64,9 @@ export default function AgentListItem({
           <Image
             src={
               agent.avatarUrl ||
-              `/placeholder.svg?width=60&height=60&query=${agent.name.charAt(
-                0
-              )}`
+              `https://picsum.photos/seed/${encodeURIComponent(
+                agent.name
+              )}/60/60`
             }
             alt={agent.name}
             fill

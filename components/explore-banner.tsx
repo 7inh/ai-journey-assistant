@@ -15,7 +15,7 @@ export default function ExploreBanner({ featuredAgent }: ExploreBannerProps) {
     return (
       <div className="relative h-[300px] md:h-[400px] lg:h-[480px] overflow-hidden group">
         <Image
-          src={`/placeholder.svg?width=1200&height=480&query=Featured+AI+Agents`}
+          src={`https://picsum.photos/seed/featured-ai-agents/1200/480`}
           alt="Featured AI Agents"
           fill
           priority
@@ -49,7 +49,9 @@ export default function ExploreBanner({ featuredAgent }: ExploreBannerProps) {
         <Image
           src={
             featuredAgent.bannerImageUrl ||
-            `/placeholder.svg?width=1200&height=480&query=${featuredAgent.name}+banner`
+            `https://picsum.photos/seed/${encodeURIComponent(
+              featuredAgent.name
+            )}-banner/1200/480`
           }
           alt={`${featuredAgent.name} banner`}
           fill
