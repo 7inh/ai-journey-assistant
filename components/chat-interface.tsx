@@ -19,6 +19,34 @@ interface ChatInterfaceProps {
   initialInput?: string;
 }
 
+// Component for empty state suggestions
+function EmptyStateSuggestions({
+  onSuggestionClick,
+}: {
+  onSuggestionClick: (suggestion: string) => void;
+}) {
+  const suggestions = [
+    "Tell me about yourself",
+    "What can you help me with?",
+    "How do I get started?",
+    "Show me some examples",
+  ];
+
+  return (
+    <div className="flex gap-2 flex-wrap py-3">
+      {suggestions.map((suggestion, i) => (
+        <button
+          key={i}
+          className="flex-shrink-0 text-sm rounded-full p-3 py-1.5 border hover:bg-muted transition-colors text-left"
+          onClick={() => onSuggestionClick(suggestion)}
+        >
+          {suggestion}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export default function ChatInterface({
   initialMessages,
   journeyId,
@@ -72,6 +100,11 @@ export default function ChatInterface({
     });
   };
 
+  const handleSuggestionClick = (suggestion: string) => {
+    setInput(suggestion);
+    handleSubmit(new FormData());
+  };
+
   return (
     <div
       className={cn(
@@ -79,7 +112,7 @@ export default function ChatInterface({
         !hasMessages && "justify-center items-center"
       )}
     >
-      {hasMessages && (
+      {hasMessages ? (
         <ScrollArea className="flex-1 p-4">
           <div className="space-y-6">
             {messages.map((m) => (
@@ -142,18 +175,7 @@ export default function ChatInterface({
           </div>
           <div ref={messagesEndRef} />
         </ScrollArea>
-      )}
-
-      {error && (
-        <div
-          className={cn(
-            "px-4 pb-2 text-red-500 text-sm",
-            !hasMessages && "w-full max-w-3xl mx-auto text-center"
-          )}
-        >
-          Error: {error.message}
-        </div>
-      )}
+      ) : null}
 
       <div
         className={cn(
@@ -170,6 +192,20 @@ export default function ChatInterface({
           showToolsPopover={false} // Explicitly false for the main chat interface
           onToolSelect={handleToolSelectionOnChatPage} // Pass a handler, though popover is disabled
         />
+        {!hasMessages ? (
+          <EmptyStateSuggestions onSuggestionClick={handleSuggestionClick} />
+        ) : null}
+
+        {error && (
+          <div
+            className={cn(
+              "px-4 pb-2 text-red-500 text-sm w-full",
+              !hasMessages && "max-w-3xl mx-auto text-center"
+            )}
+          >
+            Error: {error.message}
+          </div>
+        )}
       </div>
     </div>
   );

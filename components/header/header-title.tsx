@@ -31,7 +31,7 @@ export function HeaderTitle() {
   }
 
   // Chat page
-  if (pathname.startsWith("/chat")) {
+  if (pathname.startsWith("/chat") || pathname === "/") {
     let currentActiveAgentId: string | null = searchParams.get("agentId");
 
     if (
