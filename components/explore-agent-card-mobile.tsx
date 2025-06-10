@@ -54,7 +54,12 @@ export default function ExploreAgentCardMobile({
     actionDisabled = true;
     titleAction = "Processing activation...";
   } else if (agent.isInstalled) {
-    buttonText = "ACTIVE";
+    // Change button text based on billing type for installed agents
+    if (agent.billingType === "free" || agent.billingType === "pay-as-you-go") {
+      buttonText = "GET";
+    } else {
+      buttonText = "ACTIVE";
+    }
     actionDisabled = true;
     titleAction = `${agent.name} is active`;
   } else {
@@ -68,6 +73,11 @@ export default function ExploreAgentCardMobile({
         buttonText = "GET";
         buttonVariant = "default";
         titleAction = `Activate ${agent.name} (Pay-as-you-go)`;
+        break;
+      case "subscription":
+        buttonText = "SUB";
+        buttonVariant = "default";
+        titleAction = `Subscribe to ${agent.name}`;
         break;
       case "contact-sales":
         buttonText = "CONTACT";
@@ -152,7 +162,16 @@ export default function ExploreAgentCardMobile({
             <div>
               <p className="text-white font-medium text-sm">{agent.name}</p>
               <p className="text-white/70 text-xs truncate max-w-[150px]">
-                {agent.developerName || agent.category || "AI Assistant"}
+                {agent.billingType === "subscription" &&
+                agent.usagePricingTiers &&
+                agent.usagePricingTiers.length > 0
+                  ? `${agent.usagePricingTiers[0].rate} ${
+                      agent.usagePricingTiers[0].currency
+                    }/${agent.usagePricingTiers[0].unit.replace(
+                      "subscription",
+                      ""
+                    )}`
+                  : agent.developerName || agent.category || "AI Assistant"}
               </p>
             </div>
           </div>

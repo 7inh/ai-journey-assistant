@@ -60,7 +60,7 @@ export default function AgentDetailPageClient({
   }, [params.agentId, toast]);
 
   const handleInstallToggle = async () => {
-    if (!agent || agent.isInstalled || agent.billingType === "contact-sales") {
+    if (!agent || agent.billingType === "contact-sales") {
       // If already installed, or contact-sales, or no agent, do nothing or show a message.
       // For "contact-sales", the button in AgentHeader should be disabled or link out.
       if (agent?.isInstalled) {
@@ -72,20 +72,31 @@ export default function AgentDetailPageClient({
       return;
     }
 
-    // For 'free' or 'pay-as-you-go' agents, "install" means activate.
+    // For 'free', 'pay-as-you-go', or 'subscription' agents, "install" means activate.
     startInstallTransition(async () => {
       const success = await installAgent(agent.id); // installAgent marks it as available for use
       if (success) {
         setIsInstalled(true);
         setAgent((prev) => (prev ? { ...prev, isInstalled: true } : null));
+
+        const actionMessage =
+          agent.billingType === "subscription"
+            ? "Subscription activated"
+            : "Agent Activated";
+
         toast({
-          title: "Agent Activated",
+          title: actionMessage,
           description: `${agent.name} has been successfully activated.`,
         });
       } else {
+        const errorMessage =
+          agent.billingType === "subscription"
+            ? `Failed to subscribe to ${agent.name}`
+            : `Failed to activate ${agent.name}`;
+
         toast({
           title: "Error",
-          description: `Failed to activate ${agent.name}.`,
+          description: errorMessage,
           variant: "destructive",
         });
       }

@@ -59,7 +59,7 @@ export const mockAgents: Agent[] = [
         type: "image",
         title: "Project Dashboard",
         description: "Overview of all your active journeys.",
-        imageUrl: "/placeholder.svg?width=600&height=400",
+        imageUrl: "https://picsum.photos/seed/journey-dashboard/600/400",
       },
       {
         id: "s2",
@@ -74,7 +74,7 @@ export const mockAgents: Agent[] = [
       {
         id: "r1",
         userName: "Alice Wonderland",
-        userAvatarUrl: "/placeholder.svg?width=40&height=40",
+        userAvatarUrl: "https://picsum.photos/seed/alice-user/40/40",
         rating: 5,
         comment:
           "This agent is a lifesaver! Made my project so much easier to manage.",
@@ -318,7 +318,7 @@ export const mockAgents: Agent[] = [
     lastUpdatedDate: "2025-05-05T09:30:00Z",
     averageRating: 4.8,
     ratingCount: 155,
-    billingType: "freemium",
+    billingType: "subscription",
     usagePricingTiers: [
       {
         unit: "premium subscription",
@@ -438,7 +438,7 @@ export const mockAgents: Agent[] = [
     lastUpdatedDate: "2025-04-15T11:20:00Z",
     averageRating: 4.7,
     ratingCount: 280,
-    billingType: "freemium",
+    billingType: "subscription",
     usagePricingTiers: [
       {
         unit: "premium features",

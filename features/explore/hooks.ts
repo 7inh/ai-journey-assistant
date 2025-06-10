@@ -81,14 +81,24 @@ export function useAgentManager() {
             );
           }
 
+          const actionMessage =
+            agent.billingType === "subscription"
+              ? "Subscription Activated"
+              : "Agent Activated";
+
           toast({
-            title: "Agent Activated",
+            title: actionMessage,
             description: `${agent.name} has been successfully activated.`,
           });
         } else {
+          const errorMessage =
+            agent.billingType === "subscription"
+              ? `Failed to subscribe to ${agent.name}`
+              : `Failed to activate ${agent.name}`;
+
           toast({
             title: "Error",
-            description: `Failed to activate ${agent.name}.`,
+            description: errorMessage,
             variant: "destructive",
           });
         }

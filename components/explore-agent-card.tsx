@@ -12,6 +12,8 @@ import {
   Palette,
   Briefcase,
   ExternalLink,
+  CreditCard,
+  PlugZap,
 } from "lucide-react";
 import type { Agent } from "@/interfaces";
 import { cn } from "@/lib/utils";
@@ -68,7 +70,7 @@ export default function ExploreAgentCard({
     switch (agent.billingType) {
       case "free":
         return {
-          text: "Activate",
+          text: "Get",
           icon: Download,
           variant: "default" as const,
           disabled: false,
@@ -77,10 +79,18 @@ export default function ExploreAgentCard({
       case "pay-as-you-go":
         return {
           text: "Activate",
-          icon: Briefcase,
+          icon: PlugZap,
           variant: "default" as const,
           disabled: false,
           titleAction: `Activate ${agent.name} (Pay-as-you-go)`,
+        };
+      case "subscription":
+        return {
+          text: "Subscribe",
+          icon: CreditCard,
+          variant: "default" as const,
+          disabled: false,
+          titleAction: `Subscribe to ${agent.name}`,
         };
       case "contact-sales":
         return {
@@ -195,21 +205,43 @@ export default function ExploreAgentCard({
               {buttonConfig.text}
             </Button>
 
-            {(agent.billingType === "pay-as-you-go" ||
-              agent.billingType === "contact-sales") && (
+            {
               <div className="h-5">
                 {agent.billingType === "pay-as-you-go" && (
                   <p className="text-xs text-muted-foreground text-center">
                     Usage-based pricing
                   </p>
                 )}
+                {agent.billingType === "subscription" &&
+                  agent.usagePricingTiers &&
+                  agent.usagePricingTiers.length > 0 && (
+                    <p className="text-xs text-muted-foreground text-center">
+                      {agent.usagePricingTiers[0].rate}{" "}
+                      {agent.usagePricingTiers[0].currency}/
+                      {agent.usagePricingTiers[0].unit
+                        .replace("subscription", "")
+                        .trim()}
+                    </p>
+                  )}
+                {agent.billingType === "subscription" &&
+                  (!agent.usagePricingTiers ||
+                    agent.usagePricingTiers.length === 0) && (
+                    <p className="text-xs text-muted-foreground text-center">
+                      Subscription required
+                    </p>
+                  )}
                 {agent.billingType === "contact-sales" && (
                   <p className="text-xs text-muted-foreground text-center">
                     Enterprise pricing
                   </p>
                 )}
+                {agent.billingType === "free" && (
+                  <p className="text-xs text-muted-foreground text-center">
+                    Free to use
+                  </p>
+                )}
               </div>
-            )}
+            }
           </div>
         </div>
       </div>
