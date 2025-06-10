@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { DownloadCloud } from "lucide-react";
 import type { Agent } from "@/interfaces";
 import { Spinner } from "@/components/ui/spinner";
+import { getAgentExploreRoute } from "@/constants/routes.constants";
 
 interface TopAgentListItemProps {
   agent: Agent;
@@ -55,7 +56,10 @@ export default function TopAgentListItem({
   };
 
   return (
-    <Link href={`/explore/${agent.id}`} className="block group py-3 h-full">
+    <Link
+      href={getAgentExploreRoute(agent.id)}
+      className="block group py-3 h-full"
+    >
       <div className="flex items-center gap-3">
         <div className="text-lg font-medium text-muted-foreground w-6 text-center shrink-0">
           {rank}

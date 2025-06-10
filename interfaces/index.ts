@@ -165,4 +165,5 @@ export interface Agent {
   // billingCycle?: "monthly" | "yearly" | "one-time";
   creationDate?: string; // Added for sorting new agents
   weeklyTrendingScore?: number;
+  isPremium?: boolean;
 }

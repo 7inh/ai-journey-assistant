@@ -9,7 +9,7 @@ import {
   LinkIcon as LinkIconLucide,
   ShoppingCart,
   type LucideIcon,
-} from "lucide-react"
+} from "lucide-react";
 
 export const JourneyLogIcons: Record<string, LucideIcon> = {
   "journey-start": MessageSquareText,
@@ -22,9 +22,9 @@ export const JourneyLogIcons: Record<string, LucideIcon> = {
   OriginalRequest: LinkIconLucide,
   Phase: BookOpen,
   Task: ShoppingCart,
-}
+};
 
-export const DEFAULT_AGENT_ID = "journey-master"
+export const DEFAULT_AGENT_ID = "journey-master";
 
 // Add other enums or constants here as your project grows.
 // For example:

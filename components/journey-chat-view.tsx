@@ -11,11 +11,11 @@ import { Bot } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-// Removed: import { JourneyLogIcons, mockAgents } from "@/lib/data" // CRITICAL: Remove mockAgents import
 import { JourneyLogIcons } from "@/constants"; // Corrected import for JourneyLogIcons
 import ChatInputForm from "@/components/chat-input-form";
 import { useHeader } from "@/contexts/header-context";
 import { useToast } from "@/components/ui/use-toast";
+import { API_ROUTES } from "@/constants/routes.constants";
 
 interface JourneyChatViewProps {
   journeyId: string;
@@ -130,7 +130,7 @@ export default function JourneyChatView({
   onUserRequestSubmit,
   onTaskUpdate,
   initialSelectedAgentId,
-  availableAgents, // Use this prop
+  availableAgents, // This prop is crucial
 }: JourneyChatViewProps) {
   const { setOverrideTitle } = useHeader();
   const { toast } = useToast();
@@ -194,7 +194,7 @@ export default function JourneyChatView({
     setInput,
     setMessages,
   } = useChat({
-    api: `/api/chat`,
+    api: API_ROUTES.CHAT,
     initialMessages: [],
     body: {
       journeyId,

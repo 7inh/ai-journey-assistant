@@ -1,39 +1,60 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useRouter } from "next/navigation"
+import * as React from "react";
+import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogPortal,
   DialogOverlay,
   DialogContent,
-  // DialogHeader, DialogTitle, DialogDescription are not used here as Command has its own structure
-} from "@/components/ui/dialog"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import type { Journey } from "@/interfaces"
-import { FileText } from "lucide-react"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/dialog";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import type { Journey } from "@/interfaces";
+import { FileText, CornerDownLeft } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { getJourneyRoute, getChatRoute } from "@/constants/routes.constants";
 
 interface SearchModalProps {
-  journeys: Journey[]
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  journeys: Journey[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export function SearchModal({ journeys, open, onOpenChange }: SearchModalProps) {
-  const router = useRouter()
-  const [inputValue, setInputValue] = React.useState("")
+export function SearchModal({
+  journeys,
+  open,
+  onOpenChange,
+}: SearchModalProps) {
+  const router = useRouter();
+  const [inputValue, setInputValue] = React.useState("");
 
   const handleSelectJourney = (journeyId: string) => {
-    router.push(`/journeys/${journeyId}`)
-    onOpenChange(false) // Close modal on selection
-  }
+    router.push(getJourneyRoute(journeyId));
+    onOpenChange(false); // Close modal on selection
+  };
+
+  const handleStartNewJourney = () => {
+    if (inputValue.trim()) {
+      router.push(
+        getChatRoute(undefined) +
+          `?query=${encodeURIComponent(inputValue.trim())}`
+      );
+      onOpenChange(false); // Close modal on selection
+    }
+  };
 
   React.useEffect(() => {
     if (open) {
-      setInputValue("") // Reset input when modal opens
+      setInputValue(""); // Reset input when modal opens
     }
-  }, [open])
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -45,7 +66,7 @@ export function SearchModal({ journeys, open, onOpenChange }: SearchModalProps) 
             // but we override specific styles for this search modal.
             // top-[50%] is default, we want it higher for a command palette feel.
             "top-[20%] translate-y-[-20%]", // Adjust vertical position
-            "p-0 sm:max-w-[625px] overflow-hidden", // Remove padding for Command, set width
+            "p-0 sm:max-w-[625px] overflow-hidden" // Remove padding for Command, set width
             // Ensure other necessary styles from default DialogContent are maintained if needed,
             // or rely on its base styles and only override what's necessary.
             // The base DialogContent already includes:
@@ -57,10 +78,32 @@ export function SearchModal({ journeys, open, onOpenChange }: SearchModalProps) 
           <Command
             shouldFilter={true}
             className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5"
+            onKeyDown={(e) => {
+              // When Enter is pressed and there are no matching results
+              if (
+                e.key === "Enter" &&
+                inputValue.trim() &&
+                !journeys.some((journey) =>
+                  `${journey.title} ${journey.originalRequest || ""}`
+                    .toLowerCase()
+                    .includes(inputValue.toLowerCase())
+                )
+              ) {
+                handleStartNewJourney();
+              }
+            }}
           >
-            <CommandInput placeholder="Search journeys..." value={inputValue} onValueChange={setInputValue} autoFocus />
+            <CommandInput
+              placeholder="Search journeys..."
+              value={inputValue}
+              onValueChange={setInputValue}
+              autoFocus
+            />
             <CommandList className="max-h-[calc(100vh-200px)] sm:max-h-[400px]">
-              <CommandEmpty>No journeys found.</CommandEmpty>
+              <CommandEmpty>
+                Press <kbd className="font-mono">Enter</kbd> to start a new
+                journey <CornerDownLeft className="ml-2 inline h-4 w-4" />
+              </CommandEmpty>
               <CommandGroup heading="Journeys">
                 {journeys.map((journey) => (
                   <CommandItem
@@ -79,5 +122,5 @@ export function SearchModal({ journeys, open, onOpenChange }: SearchModalProps) 
         </DialogContent>
       </DialogPortal>
     </Dialog>
-  )
+  );
 }

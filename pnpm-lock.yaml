@@ -14,6 +14,9 @@ dependencies:
   '@hookform/resolvers':
     specifier: ^3.9.1
     version: 3.9.1(react-hook-form@7.54.1)
+  '@iconify/react':
+    specifier: ^6.0.0
+    version: 6.0.0(react@19.0.0)
   '@radix-ui/react-accordion':
     specifier: 1.2.2
     version: 1.2.2(@types/react-dom@19.0.0)(@types/react@19.0.0)(react-dom@19.0.0)(react@19.0.0)
@@ -324,6 +327,19 @@ packages:
       react-hook-form: ^7.0.0
     dependencies:
       react-hook-form: 7.54.1(react@19.0.0)
+    dev: false
+
+  /@iconify/react@6.0.0(react@19.0.0):
+    resolution: {integrity: sha512-eqNscABVZS8eCpZLU/L5F5UokMS9mnCf56iS1nM9YYHdH8ZxqZL9zyjSwW60IOQFsXZkilbBiv+1paMXBhSQnw==}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      '@iconify/types': 2.0.0
+      react: 19.0.0
+    dev: false
+
+  /@iconify/types@2.0.0:
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
     dev: false
 
   /@img/sharp-darwin-arm64@0.33.5:

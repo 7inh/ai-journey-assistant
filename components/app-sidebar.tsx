@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useEffect, useCallback } from "react"
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation" // Added useRouter
+import * as React from "react";
+import { useEffect, useCallback } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -16,48 +16,52 @@ import {
   SidebarMenuButton,
   SidebarSeparator,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { mockJourneys, sidebarNavItems } from "@/lib/data"
-import { Bot, PanelLeftClose } from "lucide-react"
-import { useSidebar } from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button"
-import { SearchModal } from "@/components/search-modal"
+} from "@/components/ui/sidebar";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { mockJourneys, sidebarNavItems } from "@/lib/data";
+import { Bot, PanelLeftClose } from "lucide-react";
+import { useSidebar } from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
+import { SearchModal } from "@/components/search-modal";
+import { ROUTES, getJourneyRoute } from "@/constants/routes.constants";
 
 export default function AppSidebar() {
-  const pathname = usePathname()
-  const router = useRouter() // Added router
-  const { toggleSidebar } = useSidebar()
-  const [isSearchModalOpen, setIsSearchModalOpen] = React.useState(false)
+  const pathname = usePathname();
+  const router = useRouter(); // Added router
+  const { toggleSidebar } = useSidebar();
+  const [isSearchModalOpen, setIsSearchModalOpen] = React.useState(false);
 
   // Keyboard shortcut for opening search modal (Cmd/Ctrl + K)
   const handleSearchModalKeyDown = useCallback((event: KeyboardEvent) => {
     if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
-      event.preventDefault()
-      setIsSearchModalOpen((prevOpen) => !prevOpen)
+      event.preventDefault();
+      setIsSearchModalOpen((prevOpen) => !prevOpen);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    document.addEventListener("keydown", handleSearchModalKeyDown)
+    document.addEventListener("keydown", handleSearchModalKeyDown);
     return () => {
-      document.removeEventListener("keydown", handleSearchModalKeyDown)
-    }
-  }, [handleSearchModalKeyDown])
+      document.removeEventListener("keydown", handleSearchModalKeyDown);
+    };
+  }, [handleSearchModalKeyDown]);
 
   const handleSearchClick = () => {
-    setIsSearchModalOpen(true)
-  }
+    setIsSearchModalOpen(true);
+  };
 
   if (pathname === "/settings") {
-    return null
+    return null;
   }
 
   return (
     <>
       <Sidebar className="bg-muted/40 dark:bg-muted/20" collapsible="offcanvas">
         <SidebarHeader className="p-2 flex flex-row items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 p-1 rounded-md hover:bg-muted">
+          <Link
+            href={ROUTES.HOME}
+            className="flex items-center gap-2 p-1 rounded-md hover:bg-muted"
+          >
             <Bot className="h-6 w-6 text-primary" />
           </Link>
           <Button
@@ -76,18 +80,18 @@ export default function AppSidebar() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   {sidebarNavItems.map((item) => {
-                    let tooltipContent = item.title
-                    let shortcutDisplay: string | null = null
+                    let tooltipContent = item.title;
+                    let shortcutDisplay: string | null = null;
 
                     if (item.action === "openSearchModal") {
-                      tooltipContent = `${item.title} (⌘K)`
-                      shortcutDisplay = "⌘K"
+                      tooltipContent = `${item.title} (⌘K)`;
+                      shortcutDisplay = "⌘K";
                     } else if (item.id === "explore") {
-                      tooltipContent = `${item.title} (⌘E)`
-                      shortcutDisplay = "⌘E"
+                      tooltipContent = `${item.title} (⌘E)`;
+                      shortcutDisplay = "⌘E";
                     } else if (item.id === "new-journey") {
-                      tooltipContent = `${item.title} (⌘J)`
-                      shortcutDisplay = "⌘J"
+                      tooltipContent = `${item.title} (⌘J)`;
+                      shortcutDisplay = "⌘J";
                     }
 
                     return (
@@ -95,7 +99,11 @@ export default function AppSidebar() {
                         {item.action === "openSearchModal" ? (
                           <SidebarMenuButton
                             onClick={handleSearchClick}
-                            tooltip={{ children: tooltipContent, side: "right", align: "center" }}
+                            tooltip={{
+                              children: tooltipContent,
+                              side: "right",
+                              align: "center",
+                            }}
                           >
                             <item.icon className="h-4 w-4" />
                             <span className="flex-grow">{item.title}</span>
@@ -110,10 +118,16 @@ export default function AppSidebar() {
                             asChild
                             isActive={
                               item.href
-                                ? pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))
+                                ? pathname === item.href ||
+                                  (item.href !== "/" &&
+                                    pathname.startsWith(item.href))
                                 : false
                             }
-                            tooltip={{ children: tooltipContent, side: "right", align: "center" }}
+                            tooltip={{
+                              children: tooltipContent,
+                              side: "right",
+                              align: "center",
+                            }}
                           >
                             <Link href={item.href || "#"}>
                               <item.icon className="h-4 w-4" />
@@ -127,7 +141,7 @@ export default function AppSidebar() {
                           </SidebarMenuButton>
                         )}
                       </SidebarMenuItem>
-                    )
+                    );
                   })}
                 </SidebarMenu>
               </SidebarGroupContent>
@@ -137,7 +151,9 @@ export default function AppSidebar() {
 
             <SidebarGroup className="p-2">
               <SidebarGroupLabel className="px-2 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:py-2">
-                <span className="group-data-[collapsible=icon]:hidden">My Journeys</span>
+                <span className="group-data-[collapsible=icon]:hidden">
+                  My Journeys
+                </span>
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
@@ -146,10 +162,14 @@ export default function AppSidebar() {
                       <SidebarMenuButton
                         asChild
                         size="default"
-                        isActive={pathname === `/journeys/${journey.id}`}
-                        tooltip={{ children: journey.title, side: "right", align: "center" }}
+                        isActive={pathname === getJourneyRoute(journey.id)}
+                        tooltip={{
+                          children: journey.title,
+                          side: "right",
+                          align: "center",
+                        }}
                       >
-                        <Link href={`/journeys/${journey.id}`}>
+                        <Link href={getJourneyRoute(journey.id)}>
                           <span>{journey.title}</span>
                         </Link>
                       </SidebarMenuButton>
@@ -163,7 +183,11 @@ export default function AppSidebar() {
         <SidebarRail />
       </Sidebar>
 
-      <SearchModal journeys={mockJourneys} open={isSearchModalOpen} onOpenChange={setIsSearchModalOpen} />
+      <SearchModal
+        journeys={mockJourneys}
+        open={isSearchModalOpen}
+        onOpenChange={setIsSearchModalOpen}
+      />
     </>
-  )
+  );
 }

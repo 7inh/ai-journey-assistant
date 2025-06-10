@@ -8,6 +8,7 @@ import { DownloadCloud, XCircle } from "lucide-react";
 import type { Agent } from "@/interfaces";
 import { cn } from "@/lib/utils";
 import { Spinner } from "@/components/ui/spinner";
+import { getAgentExploreRoute } from "@/constants/routes.constants";
 
 interface AgentListItemProps {
   agent: Agent;
@@ -40,7 +41,7 @@ export default function AgentListItem({
   const shortDescription = agent.category || agent.tags?.[0] || "AI Agent";
 
   return (
-    <Link href={`/explore/${agent.id}`} className="block group w-full">
+    <Link href={getAgentExploreRoute(agent.id)} className="block group w-full">
       <div
         className={cn(
           "flex items-center py-3 group-hover:bg-muted/50 dark:group-hover:bg-muted/20 transition-colors",

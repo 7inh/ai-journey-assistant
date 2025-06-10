@@ -18,6 +18,7 @@ import {
 import type { Agent } from "@/interfaces";
 import { cn } from "@/lib/utils";
 import { Spinner } from "@/components/ui/spinner";
+import { getAgentExploreRoute } from "@/constants/routes.constants";
 
 interface ExploreAgentCardProps {
   agent: Agent;
@@ -112,7 +113,7 @@ export default function ExploreAgentCard({
   })();
 
   return (
-    <Link href={`/explore/${agent.id}`} className="block group h-full">
+    <Link href={getAgentExploreRoute(agent.id)} className="block group h-full">
       <div
         className={cn(
           "h-full rounded-lg overflow-hidden border bg-card text-card-foreground shadow-sm",

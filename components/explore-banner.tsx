@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Agent } from "@/interfaces";
+import { getAgentExploreRoute } from "@/constants/routes.constants";
 
 interface ExploreBannerProps {
   featuredAgent?: Agent; // Make it optional in case no agent is featured
@@ -43,7 +44,7 @@ export default function ExploreBanner({ featuredAgent }: ExploreBannerProps) {
     : "FEATURED AGENT";
 
   return (
-    <Link href={`/explore/${featuredAgent.id}`} className="block group">
+    <Link href={getAgentExploreRoute(featuredAgent.id)} className="block group">
       <div className="-translate-y-20 relative h-[300px] md:h-[400px] lg:h-[480px] overflow-hidden shadow-2xl">
         <Image
           src={

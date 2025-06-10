@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
+import { getAgentExploreRoute } from "@/constants/routes.constants";
 
 interface ExploreAgentCardMobileProps {
   agent: Agent;
@@ -89,7 +90,7 @@ export default function ExploreAgentCardMobile({
   }
 
   return (
-    <Link href={`/explore/${agent.id}`} className="block group h-full">
+    <Link href={getAgentExploreRoute(agent.id)} className="block group h-full">
       <div
         className={cn(
           "relative rounded-lg overflow-hidden",
