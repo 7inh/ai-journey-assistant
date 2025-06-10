@@ -1,0 +1,45 @@
+{
+    "currentLanguage": "English",
+    "settings": {
+        "tabs": {
+            "profile": "Profile",
+            "interactionStats": "Interaction Stats",
+            "usageDetails": "Usage Details",
+            "storage": "Storage",
+            "billingAndUsage": "Billing and Usage"
+        }
+    },
+    "common": {
+        "language": "Language",
+        "english": "English",
+        "vietnamese": "Vietnamese",
+        "myAccount": "My Account",
+        "userAvatar": "User avatar"
+    },
+    "userMenu": {
+        "upgrade": "Upgrade",
+        "freeVersion": "You're on a free version.",
+        "profile": "Profile",
+        "settings": "Settings",
+        "invitePeople": "Invite people",
+        "filterSidebar": "Filter sidebar",
+        "activity": "Activity",
+        "allActivity": "All activity",
+        "unreadMessagesOnly": "Unread messages only",
+        "mentionsOnly": "Mentions only",
+        "customizeBySection": "Customize by section",
+        "people": "People",
+        "everyone": "Everyone",
+        "withoutExternalPeople": "Without external people",
+        "includingExternalPeople": "Including external people",
+        "toolsAndSettings": "Tools & settings",
+        "tools": "Tools",
+        "customizeWorkspace": "Customize workspace",
+        "workspaceBuilder": "Workspace builder",
+        "workspaceAnalytics": "Workspace analytics",
+        "community": "Community",
+        "discordCommunity": "Discord Community",
+        "signInOnMobile": "Sign in on mobile",
+        "logOut": "Log out"
+    }
+}

@@ -9,8 +9,10 @@ import {
   UserCircle,
 } from "lucide-react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export function SettingsTabs() {
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -35,7 +37,8 @@ export function SettingsTabs() {
             className="flex-shrink-0 rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary text-xs py-1.5"
           >
             <span className="flex items-center">
-              <UserCircle className="mr-1 h-3 w-3" /> Profile
+              <UserCircle className="mr-1 h-3 w-3" />{" "}
+              {t("settings.tabs.profile")}
             </span>
           </TabsTrigger>
           <TabsTrigger
@@ -43,7 +46,8 @@ export function SettingsTabs() {
             className="flex-shrink-0 rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary text-xs py-1.5"
           >
             <span className="flex items-center">
-              <MessageSquare className="mr-1 h-3 w-3" /> Interaction Stats
+              <MessageSquare className="mr-1 h-3 w-3" />{" "}
+              {t("settings.tabs.interactionStats")}
             </span>
           </TabsTrigger>
           <TabsTrigger
@@ -51,7 +55,8 @@ export function SettingsTabs() {
             className="flex-shrink-0 rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary text-xs py-1.5"
           >
             <span className="flex items-center">
-              <BarChartBig className="mr-1 h-3 w-3" /> Usage Details
+              <BarChartBig className="mr-1 h-3 w-3" />{" "}
+              {t("settings.tabs.usageDetails")}
             </span>
           </TabsTrigger>
           <TabsTrigger
@@ -59,7 +64,8 @@ export function SettingsTabs() {
             className="flex-shrink-0 rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary text-xs py-1.5"
           >
             <span className="flex items-center">
-              <HardDrive className="mr-1 h-3 w-3" /> Storage
+              <HardDrive className="mr-1 h-3 w-3" />{" "}
+              {t("settings.tabs.storage")}
             </span>
           </TabsTrigger>
           <TabsTrigger
@@ -67,7 +73,8 @@ export function SettingsTabs() {
             className="flex-shrink-0 rounded-none bg-background h-full data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary text-xs py-1.5"
           >
             <span className="flex items-center">
-              <CreditCardIcon className="mr-1 h-3 w-3" /> Billing and Usage
+              <CreditCardIcon className="mr-1 h-3 w-3" />{" "}
+              {t("settings.tabs.billingAndUsage")}
             </span>
           </TabsTrigger>
         </TabsList>

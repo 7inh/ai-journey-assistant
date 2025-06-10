@@ -1,22 +1,23 @@
-import type React from "react";
+import AppHeader from "@/components/app-header";
+import AppSidebar from "@/components/app-sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
+import ConfirmationDialog from "@/components/ui/confirmation-dialog";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/toaster";
+import { ConfirmationProvider } from "@/contexts/confirmation-context";
+import { HeaderProvider } from "@/contexts/header-context";
+import { ThemeContextProvider } from "@/contexts/theme-context";
+import BrowserInitor from "@/lib/browser-init";
+import { createProviderCompose } from "@/lib/provider-composer";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css"; // Keep this for global styles
-import { ThemeProvider } from "@/components/theme-provider";
-import { ThemeContextProvider } from "@/contexts/theme-context";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import AppSidebar from "@/components/app-sidebar";
-import AppHeader from "@/components/app-header";
-import { Toaster } from "@/components/ui/toaster";
 import { cookies } from "next/headers";
-import { HeaderProvider } from "@/contexts/header-context";
-import { ConfirmationProvider } from "@/contexts/confirmation-context";
-import ConfirmationDialog from "@/components/ui/confirmation-dialog";
-import { cn } from "@/lib/utils";
-import BrowserInitor from "@/lib/browser-init"; // Import BrowserInitor
 import NextTopLoader from "nextjs-toploader";
-import { createProviderCompose } from "@/lib/provider-composer";
-import { AppBarProvider } from "@/contexts/app-bar-context"; // Import AppBarProvider
+import type React from "react";
+import "./globals.css"; // Keep this for global styles
+import { AppBarProvider } from "@/contexts/app-bar-context";
+import I18nProvider from "@/components/i18n-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,7 +46,9 @@ export default async function RootLayout({
       disableTransitionOnChange: false,
     })
     .add(ThemeContextProvider)
+    .add(I18nProvider)
     .add(SidebarProvider, { defaultOpen: defaultSidebarOpen })
+    .add(AppBarProvider)
     .add(HeaderProvider)
     .add(ConfirmationProvider)
     // .add(CartProvider)
@@ -53,9 +56,26 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(inter.className, "bg-background text-foreground")}>
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const savedLang = localStorage.getItem('i18nextLng');
+                if (savedLang) {
+                  document.documentElement.lang = savedLang.split('-')[0] || 'en';
+                }
+              } catch (e) {
+                console.error('Error setting initial language:', e);
+              }
+            `,
+          }}
+        />
+      </head>
+      <body className={cn(inter.className, "min-h-screen antialiased")}>
         <NextTopLoader
-          color="hsl(var(--primary))"
+          color="#2299DD"
           initialPosition={0.08}
           crawlSpeed={200}
           height={3}
@@ -63,20 +83,19 @@ export default async function RootLayout({
           showSpinner={false}
           easing="ease"
           speed={200}
-          shadow="0 0 10px hsl(var(--primary)),0 0 5px hsl(var(--primary))"
         />
         <AppProviders>
-          <AppBarProvider>
-            <div className="flex min-h-screen w-full max-w-[100dvw] overflow-x-hidden">
+          <main className="flex h-screen w-screen flex-col overflow-hidden">
+            <div className="flex flex-1 overflow-hidden">
               <AppSidebar />
-              <div className="flex flex-1 flex-col overflow-auto h-dvh">
+              <div className="flex flex-col flex-1 w-full overflow-hidden max-h-screen">
                 <AppHeader />
-                <main className="flex flex-col flex-1">{children}</main>
+                <div className="flex-1 overflow-y-auto">{children}</div>
               </div>
             </div>
-            <ConfirmationDialog />
-            <Toaster />
-          </AppBarProvider>
+          </main>
+          <ConfirmationDialog />
+          <Toaster />
         </AppProviders>
       </body>
     </html>

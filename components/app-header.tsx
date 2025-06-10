@@ -10,6 +10,8 @@ import { UserMenu } from "@/components/header/user-menu";
 import { useGlobalShortcuts } from "@/hooks/use-global-shortcuts";
 import { HeaderTitle } from "@/components/header/header-title";
 import { useHeader } from "@/contexts/header-context";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { HeaderSkeleton } from "@/components/header/header-skeleton";
 
 export default function AppHeader() {
   const [mounted, setMounted] = useState(false);
@@ -24,23 +26,19 @@ export default function AppHeader() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return (
-      <header className="sticky top-0 z-10 flex h-16 items-center gap-4 bg-background px-4 md:px-6 dark:border-neutral-800">
-        <div className="h-6 w-6 animate-pulse rounded-md bg-muted md:hidden" />
-        <div className="flex-1 h-6 animate-pulse rounded-md bg-muted" />
-        <div className="flex items-center gap-2 md:gap-4">
-          <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
-          <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
-        </div>
-      </header>
-    );
-  }
-
   const isSettingsPage = pathname === "/settings";
   const isAgentDetailPage =
     pathname.startsWith("/explore/") && pathname.split("/").length === 3;
   const isExplorePage = pathname === "/explore" && !isAgentDetailPage;
+
+  if (!mounted) {
+    return (
+      <HeaderSkeleton
+        isSettingsPage={isSettingsPage}
+        isExplorePage={isExplorePage}
+      />
+    );
+  }
 
   return (
     <header className={cn("sticky top-0", isExplorePage ? "z-40" : "z-10")}>

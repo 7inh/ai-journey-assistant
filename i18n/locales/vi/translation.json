@@ -1,0 +1,45 @@
+{
+    "currentLanguage": "Tiếng Việt",
+    "settings": {
+        "tabs": {
+            "profile": "Hồ sơ",
+            "interactionStats": "Thống kê tương tác",
+            "usageDetails": "Chi tiết sử dụng",
+            "storage": "Lưu trữ",
+            "billingAndUsage": "Thanh toán và Sử dụng"
+        }
+    },
+    "common": {
+        "language": "Ngôn ngữ",
+        "english": "Tiếng Anh",
+        "vietnamese": "Tiếng Việt",
+        "myAccount": "Tài khoản của tôi",
+        "userAvatar": "Ảnh đại diện người dùng"
+    },
+    "userMenu": {
+        "upgrade": "Nâng cấp",
+        "freeVersion": "Bạn đang dùng phiên bản miễn phí.",
+        "profile": "Hồ sơ",
+        "settings": "Cài đặt",
+        "invitePeople": "Mời người dùng",
+        "filterSidebar": "Lọc thanh bên",
+        "activity": "Hoạt động",
+        "allActivity": "Tất cả hoạt động",
+        "unreadMessagesOnly": "Chỉ tin nhắn chưa đọc",
+        "mentionsOnly": "Chỉ đề cập",
+        "customizeBySection": "Tùy chỉnh theo phần",
+        "people": "Người dùng",
+        "everyone": "Tất cả mọi người",
+        "withoutExternalPeople": "Không có người ngoài",
+        "includingExternalPeople": "Bao gồm người ngoài",
+        "toolsAndSettings": "Công cụ & cài đặt",
+        "tools": "Công cụ",
+        "customizeWorkspace": "Tùy chỉnh không gian làm việc",
+        "workspaceBuilder": "Xây dựng không gian làm việc",
+        "workspaceAnalytics": "Phân tích không gian làm việc",
+        "community": "Cộng đồng",
+        "discordCommunity": "Cộng đồng Discord",
+        "signInOnMobile": "Đăng nhập trên di động",
+        "logOut": "Đăng xuất"
+    }
+}
