@@ -53,18 +53,22 @@ export function ExploreRecommendedSection({
   return (
     <>
       <Separator className="my-10" />
-      <div className="mb-10">
-        <h2 className="text-2xl font-semibold mb-6">Recommended For You</h2>
-        <div className="max-h-[480px]">
+      <div>
+        <div>
           <Carousel
             className="w-full h-full"
             opts={{
               align: "start",
               loop: agents.length > itemsPerView,
-              slidesToScroll: 1,
-              slidesToShow: itemsPerView,
             }}
           >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold">Recommended For You</h2>
+              <div className="flex justify-end gap-2">
+                <CarouselPrevious className="static transform-none" />
+                <CarouselNext className="static transform-none" />
+              </div>
+            </div>
             <CarouselContent className="-ml-4 h-full">
               {agents.map((agent) => (
                 <CarouselItem
@@ -89,10 +93,6 @@ export function ExploreRecommendedSection({
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="flex justify-end gap-2 mt-4">
-              <CarouselPrevious className="relative static transform-none" />
-              <CarouselNext className="relative static transform-none" />
-            </div>
           </Carousel>
         </div>
       </div>
