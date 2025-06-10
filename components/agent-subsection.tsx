@@ -4,6 +4,7 @@ import ExploreAgentCardMobile from "@/components/explore-agent-card-mobile";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface AgentSubSectionProps {
   title: string;
@@ -86,6 +87,43 @@ export default function AgentSubSection({
     return () => clearTimeout(timeoutId);
   }, [agents, cardTypeMap]);
 
+  // Add scroll tracking functionality
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  // Handle scroll events
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10); // 10px buffer
+  };
+
+  // Functions to scroll left and right
+  const scrollLeft = () => {
+    if (!scrollContainerRef.current) return;
+    scrollContainerRef.current.scrollBy({ left: -300, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    if (!scrollContainerRef.current) return;
+    scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" });
+  };
+
+  // Check scroll possibility on mount and when content changes
+  useEffect(() => {
+    if (scrollable) {
+      handleScroll();
+      const scrollContainer = scrollContainerRef.current;
+      if (scrollContainer) {
+        scrollContainer.addEventListener("scroll", handleScroll);
+        return () =>
+          scrollContainer.removeEventListener("scroll", handleScroll);
+      }
+    }
+  }, [scrollable, agents, maxHeight]);
+
   const content = (
     <div
       className={cn(
@@ -160,19 +198,46 @@ export default function AgentSubSection({
     <section className={className}>
       <h2 className="text-2xl font-bold tracking-tight mb-6">{title}</h2>
       {scrollable ? (
-        <ScrollArea
-          className={cn(
-            "w-full whitespace-nowrap"
-            // To achieve edge-to-edge feel for scroll area on mobile, if section is inside a padded container:
-            // This requires knowing the container padding. Assuming default page padding is px-4 (1rem).
-            // "-mx-4 sm:-mx-6 md:-mx-8" // Negative margins to counteract page padding
-            // "px-4 sm:px-6 md:px-8" // Add padding back to scrollbar track if needed
-            // For now, let's keep it simple and let it respect container padding.
+        <div className="relative">
+          {canScrollLeft && (
+            <button
+              onClick={scrollLeft}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full border bg-background shadow-md hover:bg-muted transition-colors"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
           )}
-        >
-          {content}
-          <ScrollBar orientation="horizontal" className="h-2.5" />
-        </ScrollArea>
+
+          {canScrollRight && (
+            <button
+              onClick={scrollRight}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full border bg-background shadow-md hover:bg-muted transition-colors"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          )}
+
+          {/* Left gradient overlay - moved outside scrollable container */}
+          {canScrollLeft && (
+            <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none bg-gradient-to-r from-background to-transparent" />
+          )}
+
+          {/* Right gradient overlay - moved outside scrollable container */}
+          {canScrollRight && (
+            <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none bg-gradient-to-l from-background to-transparent" />
+          )}
+
+          <div
+            ref={scrollContainerRef}
+            className="overflow-x-auto pr-10 hide-scrollbar relative"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            onScroll={handleScroll}
+          >
+            {content}
+          </div>
+        </div>
       ) : (
         content
       )}

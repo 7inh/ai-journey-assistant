@@ -142,7 +142,7 @@ export default function AgentDetailPageClient({
           onInstallToggle={handleInstallToggle}
           isInstallPending={isInstallPending} // Pass pending state
         />
-        <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-x-8 xl:gap-x-12 gap-y-8 mt-8 md:mt-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-x-8 xl:gap-x-12 gap-y-8 mt-8 md:mt-12">
           <main className="lg:col-span-2 space-y-8 md:space-y-10">
             {agent && (
               <AgentAboutSection
