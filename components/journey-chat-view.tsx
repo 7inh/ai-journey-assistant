@@ -245,6 +245,7 @@ export default function JourneyChatView({
         { completed },
         currentLog
       );
+      // Update the entire log state to ensure phase-nested tasks also get updated
       setCurrentLog(updatedLog);
     } catch (e) {
       console.error("Error toggling task:", e);
@@ -267,9 +268,28 @@ export default function JourneyChatView({
         { decisionId, approved },
         currentLog
       );
+      // Update the entire log state to ensure all related UI elements are updated properly
       setCurrentLog(updatedLog);
     } catch (e) {
       console.error("Error handling decision:", e);
+    } finally {
+      setTaskActionLoading(false);
+    }
+  };
+
+  const handleActionButtonClick = async (taskId: string, actionId: string) => {
+    setTaskActionLoading(true);
+    try {
+      const updatedLog = await onTaskUpdate(
+        journeyId,
+        taskId,
+        "edit",
+        { actionId },
+        currentLog
+      );
+      setCurrentLog(updatedLog);
+    } catch (e) {
+      console.error("Error handling action button:", e);
     } finally {
       setTaskActionLoading(false);
     }
@@ -393,10 +413,11 @@ export default function JourneyChatView({
                 >
                   <JourneyMessageContent
                     item={item}
-                    allAgents={availableAgents} // Pass availableAgents down
+                    allAgents={availableAgents}
                     onEditTask={handleTaskEdit}
                     onToggleTaskComplete={handleToggleTaskComplete}
                     onDecisionAction={handleDecisionAction}
+                    onActionButtonClick={handleActionButtonClick}
                   />
                 </div>
               </div>

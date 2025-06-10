@@ -1,60 +1,89 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { MessageSquare, ListChecks } from "lucide-react";
 
 export default function JourneyDetailLoading() {
   return (
-    <div className="container mx-auto max-w-5xl py-8 px-4 md:px-0">
-      <Card className="mb-8">
-        <CardHeader>
-          <Skeleton className="h-10 w-3/4 mb-2" />
-          <Skeleton className="h-4 w-1/2 mb-3" />
-          <div className="flex gap-2">
-            <Skeleton className="h-6 w-20 rounded-full" />
-            <Skeleton className="h-6 w-24 rounded-full" />
+    <div className="h-full flex flex-col">
+      {/* Chat Messages Area */}
+      <div className="flex-1 p-4 overflow-hidden">
+        <div className="space-y-6">
+          {/* Journey Start Message */}
+          <div className="flex items-start gap-3 justify-start">
+            <Avatar className="h-8 w-8 flex-shrink-0">
+              <AvatarFallback>
+                <MessageSquare size={18} />
+              </AvatarFallback>
+            </Avatar>
+            <div className="max-w-[70%] rounded-lg p-3 shadow-sm bg-muted dark:bg-neutral-800">
+              <Skeleton className="h-5 w-48 mb-2" />
+              <Skeleton className="h-4 w-full max-w-[250px]" />
+            </div>
           </div>
-        </CardHeader>
-        <Skeleton className="aspect-video w-full" />
-        <CardContent className="pt-6">
-          <Skeleton className="h-4 w-full mb-2" />
-          <Skeleton className="h-4 w-full mb-2" />
-          <Skeleton className="h-4 w-3/4 mb-6" />
 
-          <Skeleton className="h-6 w-1/3 mb-3" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Skeleton className="h-5 w-full" />
-            <Skeleton className="h-5 w-full" />
-          </div>
-        </CardContent>
-      </Card>
+          {/* Phase Skeleton */}
+          <div className="flex items-start gap-3 justify-start">
+            <Avatar className="h-8 w-8 flex-shrink-0">
+              <AvatarFallback>
+                <ListChecks size={18} />
+              </AvatarFallback>
+            </Avatar>
+            <div className="max-w-[70%] w-full rounded-lg p-3 shadow-sm bg-muted dark:bg-neutral-800">
+              <Skeleton className="h-5 w-40 mb-3" />
 
-      <Card className="mb-8">
-        <CardHeader>
-          <Skeleton className="h-8 w-1/2 mb-2" />
-        </CardHeader>
-        <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <Skeleton className="aspect-w-4 aspect-h-3 rounded-lg" />
-          <Skeleton className="aspect-w-4 aspect-h-3 rounded-lg" />
-          <Skeleton className="aspect-w-4 aspect-h-3 rounded-lg" />
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <Skeleton className="h-8 w-1/2 mb-1" />
-          <Skeleton className="h-4 w-3/4" />
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {[1, 2].map((i) => (
-            <div key={i} className="border-b pb-4">
-              <Skeleton className="h-6 w-3/5 mb-4" />
-              <div className="space-y-3">
-                <Skeleton className="h-16 w-full rounded-md" />
-                <Skeleton className="h-16 w-full rounded-md" />
+              {/* Task Skeletons */}
+              <div className="space-y-3 mt-2 border-t border-dashed pt-2">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-4 w-4 rounded-sm" />
+                  <Skeleton className="h-4 w-full max-w-[200px]" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-4 w-4 rounded-sm" />
+                  <Skeleton className="h-4 w-full max-w-[180px]" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-4 w-4 rounded-sm" />
+                  <Skeleton className="h-4 w-full max-w-[220px]" />
+                </div>
               </div>
             </div>
-          ))}
-        </CardContent>
-      </Card>
+          </div>
+
+          {/* User Message Skeleton */}
+          <div className="flex items-start gap-3 justify-end">
+            <div className="max-w-[70%] rounded-lg p-3 shadow-sm bg-primary text-primary-foreground">
+              <Skeleton className="h-4 w-32 bg-primary-foreground/20" />
+            </div>
+          </div>
+
+          {/* AI Response Skeleton */}
+          <div className="flex items-start gap-3 justify-start">
+            <Avatar className="h-8 w-8 flex-shrink-0">
+              <AvatarFallback>
+                <MessageSquare size={18} />
+              </AvatarFallback>
+            </Avatar>
+            <div className="max-w-[70%] rounded-lg p-3 shadow-sm bg-muted dark:bg-neutral-800">
+              <Skeleton className="h-4 w-full mb-2" />
+              <Skeleton className="h-4 w-3/4 mb-2" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Input Area */}
+      <div className="sticky bottom-0 z-10 bg-background p-2">
+        <div className="relative flex items-center w-full rounded-md border border-input bg-background p-1">
+          <Skeleton className="absolute left-3 h-5 w-5" />
+          <Skeleton className="h-9 w-full ml-8 mr-16" />
+          <div className="absolute right-2 flex gap-1">
+            <Skeleton className="h-7 w-7 rounded-md" />
+            <Skeleton className="h-7 w-7 rounded-md" />
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
