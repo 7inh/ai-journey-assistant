@@ -20,12 +20,12 @@ export function HeaderSkeleton({
       >
         <div className="absolute inset-0 bg-background/80 backdrop-blur-md border-b border-border/40 dark:bg-background/70 dark:border-border/30"></div>
 
-        <div className="flex w-full items-center gap-1 sm:gap-2 relative">
+        <div className="flex w-full items-start gap-1 sm:gap-2 relative">
           {/* Sidebar trigger skeleton */}
           <div className="h-9 w-9 animate-pulse rounded-md bg-muted md:hidden" />
 
           {/* Title area skeleton */}
-          <div className="flex-1 flex justify-center">
+          <div className="flex-1 flex justify-start">
             <div className="h-6 w-48 animate-pulse rounded-md bg-muted" />
           </div>
 

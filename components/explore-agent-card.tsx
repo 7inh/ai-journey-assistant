@@ -117,7 +117,8 @@ export default function ExploreAgentCard({
       <div
         className={cn(
           "h-full rounded-lg overflow-hidden border bg-card text-card-foreground shadow-sm",
-          "transition-all duration-200 ease-in-out group-hover:shadow-xl dark:group-hover:shadow-primary/20",
+          "transition-all duration-300 ease-in-out group-hover:border-primary",
+          "group-hover:shadow-lg group-hover:scale-[1.02] group-hover:transform",
           className
         )}
       >

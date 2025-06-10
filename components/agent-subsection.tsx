@@ -129,7 +129,7 @@ export default function AgentSubSection({
       className={cn(
         "flex", // Common base for both layouts
         scrollable
-          ? "space-x-4 pb-4 px-1 xs:px-2 sm:px-0" // For horizontal scrolling, add padding inside the scroll area. Adjusted px for very small screens.
+          ? "space-x-2 pb-4 px-1 xs:px-2 sm:px-0" // For horizontal scrolling, add padding inside the scroll area. Adjusted px for very small screens.
           : "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6" // For grid layout
       )}
     >
@@ -148,7 +148,7 @@ export default function AgentSubSection({
                 cardRefs.current[index] = el;
               }}
               style={cardStyle}
-              className="flex"
+              className="flex p-2"
             >
               <ExploreAgentCardMobile
                 agent={agent}
@@ -174,7 +174,7 @@ export default function AgentSubSection({
               cardRefs.current[index] = el;
             }}
             style={cardStyle}
-            className="flex"
+            className="flex p-2"
           >
             <ExploreAgentCard
               agent={agent}
@@ -196,7 +196,7 @@ export default function AgentSubSection({
 
   return (
     <section className={className}>
-      <h2 className="text-2xl font-bold tracking-tight mb-6">{title}</h2>
+      <h2 className="text-2xl font-bold tracking-tight mb-2 px-2">{title}</h2>
       {scrollable ? (
         <div className="relative">
           {canScrollLeft && (

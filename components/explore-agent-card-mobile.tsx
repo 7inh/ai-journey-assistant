@@ -97,6 +97,8 @@ export default function ExploreAgentCardMobile({
           // Force portrait aspect ratio regardless of container constraints
           "aspect-[3/4]",
           "w-full",
+          "transition-all duration-300 ease-in-out",
+          "transform group-hover:scale-[1.03] group-hover:shadow-lg",
           className
         )}
         style={{
@@ -115,7 +117,7 @@ export default function ExploreAgentCardMobile({
           alt={`${agent.name} banner`}
           fill
           sizes="(max-width: 768px) 100vw"
-          className="object-cover"
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
 
         {/* Gradient Overlay */}
