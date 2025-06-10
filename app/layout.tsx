@@ -18,6 +18,7 @@ import type React from "react";
 import "./globals.css"; // Keep this for global styles
 import { AppBarProvider } from "@/contexts/app-bar-context";
 import I18nProvider from "@/components/i18n-provider";
+import { HelpButton } from "@/components/help-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -96,6 +97,9 @@ export default async function RootLayout({
           </main>
           <ConfirmationDialog />
           <Toaster />
+          <div className="fixed bottom-4 left-4 z-50">
+            <HelpButton />
+          </div>
         </AppProviders>
       </body>
     </html>
