@@ -1,35 +1,34 @@
 "use client";
 
-import * as React from "react";
-import { useEffect, useCallback } from "react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { SearchModal } from "@/components/search-modal";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sidebar,
   SidebarContent,
-  SidebarHeader,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
-  SidebarSeparator,
+  SidebarMenuItem,
   SidebarRail,
+  SidebarSeparator,
+  useSidebar,
 } from "@/components/ui/sidebar";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { mockJourneys, sidebarNavItems } from "@/lib/data";
-import { Bot, PanelLeftClose } from "lucide-react";
-import { useSidebar } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
-import { SearchModal } from "@/components/search-modal";
 import { ROUTES, getJourneyRoute } from "@/constants/routes.constants";
-import { Icon } from "@iconify/react";
+import { mockJourneys, sidebarNavItems } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { Icon } from "@iconify/react";
+import { Bot, PanelLeftClose } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import * as React from "react";
+import { useCallback, useEffect } from "react";
 
 export default function AppSidebar() {
   const pathname = usePathname();
-  const router = useRouter(); // Added router
   const { toggleSidebar } = useSidebar();
   const [isSearchModalOpen, setIsSearchModalOpen] = React.useState(false);
 
@@ -52,7 +51,7 @@ export default function AppSidebar() {
     setIsSearchModalOpen(true);
   };
 
-  if (pathname === "/settings") {
+  if (pathname === "/settings" || pathname === "/pricing") {
     return null;
   }
 

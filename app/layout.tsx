@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 import BrowserInitor from "@/lib/browser-init"; // Import BrowserInitor
 import NextTopLoader from "nextjs-toploader";
 import { createProviderCompose } from "@/lib/provider-composer";
-// import { CartProvider } from "@/contexts/cart-context"
+import { AppBarProvider } from "@/contexts/app-bar-context"; // Import AppBarProvider
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -66,15 +66,17 @@ export default async function RootLayout({
           shadow="0 0 10px hsl(var(--primary)),0 0 5px hsl(var(--primary))"
         />
         <AppProviders>
-          <div className="flex min-h-screen w-full max-w-[100dvw] overflow-x-hidden">
-            <AppSidebar />
-            <div className="flex flex-1 flex-col overflow-auto h-dvh">
-              <AppHeader />
-              <main className="flex flex-col flex-1">{children}</main>
+          <AppBarProvider>
+            <div className="flex min-h-screen w-full max-w-[100dvw] overflow-x-hidden">
+              <AppSidebar />
+              <div className="flex flex-1 flex-col overflow-auto h-dvh">
+                <AppHeader />
+                <main className="flex flex-col flex-1">{children}</main>
+              </div>
             </div>
-          </div>
-          <ConfirmationDialog />
-          <Toaster />
+            <ConfirmationDialog />
+            <Toaster />
+          </AppBarProvider>
         </AppProviders>
       </body>
     </html>

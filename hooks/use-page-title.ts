@@ -18,6 +18,8 @@ export function usePageTitle(agentsData: Agent[]) {
     if (pathname === "/") return "AI Assistant";
     if (pathname === "/cart") return "Shopping Cart";
     if (pathname === "/settings") return "Settings";
+    if (pathname === "/explore") return "Explore Agents";
+    if (pathname === "/pricing") return "Pricing";
     return "AI Journey Assistant";
   };
 

@@ -71,14 +71,19 @@ export function UserMenu({ isCompact = false }: UserMenuProps) {
           </div>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="opacity-50" />
-        <DropdownMenuItem className="flex-col items-start focus:bg-foreground/10 rounded-lg mx-1">
-          <div className="flex items-center gap-1">
-            <Rocket className="mr-1 h-[18px] w-[18px]" />
-            <span className="font-medium leading-none">Upgrade</span>
-          </div>
-          <p className="text-muted-foreground">
-            You&apos;re on a free version.
-          </p>
+        <DropdownMenuItem
+          asChild
+          className="flex-col items-start focus:bg-foreground/10 rounded-lg mx-1"
+        >
+          <Link href="/pricing">
+            <div className="flex items-center gap-1">
+              <Rocket className="mr-1 h-[18px] w-[18px]" />
+              <span className="font-medium leading-none">Upgrade</span>
+            </div>
+            <p className="text-muted-foreground">
+              You&apos;re on a free version.
+            </p>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator className="opacity-50" />
         <div className="px-1">
