@@ -24,6 +24,8 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { SearchModal } from "@/components/search-modal";
 import { ROUTES, getJourneyRoute } from "@/constants/routes.constants";
+import { Icon } from "@iconify/react";
+import { cn } from "@/lib/utils";
 
 export default function AppSidebar() {
   const pathname = usePathname();
@@ -151,7 +153,7 @@ export default function AppSidebar() {
 
             <SidebarGroup className="p-2">
               <SidebarGroupLabel className="px-2 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:py-2">
-                <span className="group-data-[collapsible=icon]:hidden">
+                <span className="group-data-[collapsible=icon]:hidden text-neutral-500">
                   My Journeys
                 </span>
               </SidebarGroupLabel>
@@ -170,7 +172,22 @@ export default function AppSidebar() {
                         }}
                       >
                         <Link href={getJourneyRoute(journey.id)}>
-                          <span>{journey.title}</span>
+                          {pathname === getJourneyRoute(journey.id) && (
+                            <Icon
+                              icon="tabler:route"
+                              className="mr-2 h-4 w-4"
+                            />
+                          )}
+                          <span
+                            className={cn("truncate", {
+                              "max-w-[190px]":
+                                pathname === getJourneyRoute(journey.id),
+                              "max-w-[220px]":
+                                pathname !== getJourneyRoute(journey.id),
+                            })}
+                          >
+                            {journey.title}
+                          </span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

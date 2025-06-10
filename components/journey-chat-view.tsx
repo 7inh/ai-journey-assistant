@@ -435,13 +435,11 @@ export default function JourneyChatView({
                     "max-w-[70%] rounded-lg p-3 text-sm shadow-sm",
                     m.role === "user"
                       ? "bg-primary text-primary-foreground"
-                      : "bg-muted dark:bg-neutral-800"
+                      : "bg-muted dark:bg-neutral-800",
+                    "prose dark:prose-invert prose-sm max-w-none"
                   )}
                 >
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    className="prose dark:prose-invert prose-sm max-w-none"
-                  >
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {m.content}
                   </ReactMarkdown>
                 </div>
@@ -469,7 +467,7 @@ export default function JourneyChatView({
         </div>
       )}
 
-      <div className="sticky bottom-0 z-10 bg-background flex flex-col items-center">
+      <div className="sticky bottom-0 z-10 bg-background flex flex-col items-center p-2">
         <ChatInputForm
           inputProps={inputProps}
           handleSubmit={handleJourneyChatSubmit}
