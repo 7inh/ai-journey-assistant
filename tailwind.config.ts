@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
@@ -59,6 +59,14 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
       },
       borderRadius: {
         lg: "var(--radius-lg)",
@@ -77,13 +85,34 @@ const config = {
       fontSize: {
         xs: ["var(--font-size-xs)", { lineHeight: "var(--line-height-snug)" }],
         sm: ["var(--font-size-sm)", { lineHeight: "var(--line-height-snug)" }],
-        base: ["var(--font-size-base)", { lineHeight: "var(--line-height-normal)" }],
-        lg: ["var(--font-size-lg)", { lineHeight: "var(--line-height-normal)" }],
-        xl: ["var(--font-size-xl)", { lineHeight: "var(--line-height-relaxed)" }],
-        "2xl": ["var(--font-size-2xl)", { lineHeight: "var(--line-height-relaxed)" }],
-        "3xl": ["var(--font-size-3xl)", { lineHeight: "var(--line-height-tight)" }],
-        "4xl": ["var(--font-size-4xl)", { lineHeight: "var(--line-height-tight)" }],
-        "5xl": ["var(--font-size-5xl)", { lineHeight: "var(--line-height-none)" }],
+        base: [
+          "var(--font-size-base)",
+          { lineHeight: "var(--line-height-normal)" },
+        ],
+        lg: [
+          "var(--font-size-lg)",
+          { lineHeight: "var(--line-height-normal)" },
+        ],
+        xl: [
+          "var(--font-size-xl)",
+          { lineHeight: "var(--line-height-relaxed)" },
+        ],
+        "2xl": [
+          "var(--font-size-2xl)",
+          { lineHeight: "var(--line-height-relaxed)" },
+        ],
+        "3xl": [
+          "var(--font-size-3xl)",
+          { lineHeight: "var(--line-height-tight)" },
+        ],
+        "4xl": [
+          "var(--font-size-4xl)",
+          { lineHeight: "var(--line-height-tight)" },
+        ],
+        "5xl": [
+          "var(--font-size-5xl)",
+          { lineHeight: "var(--line-height-none)" },
+        ],
       },
       fontFamily: {
         sans: ["var(--font-family-sans)"],
@@ -106,6 +135,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
