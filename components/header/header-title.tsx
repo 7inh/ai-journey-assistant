@@ -1,18 +1,17 @@
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { usePageTitle } from "@/hooks/use-page-title";
 import { useAgents } from "@/hooks/use-agents";
-import { ExploreSearch } from "./explore-search";
-import { AgentSelector } from "./agent-selector";
-import { SettingsTabs } from "./settings-tabs";
-import { DEFAULT_AGENT_ID } from "@/constants";
+import { ExploreSearch } from "@/components/header/explore-search";
+import { AgentSelector } from "@/components/header/agent-selector";
+import { SettingsTabs } from "@/components/header/settings-tabs";
+import { useActiveAgent } from "@/hooks/use-active-agent";
 
 export function HeaderTitle() {
   const { agentsData, installedAgents, isLoading } = useAgents();
   const { overrideTitle, basePageTitle, isAgentDetailPage, agentForTitle } =
     usePageTitle(agentsData);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  const { activeAgentId, isChatPath } = useActiveAgent(installedAgents);
 
   if (overrideTitle) {
     return (
@@ -25,85 +24,79 @@ export function HeaderTitle() {
     );
   }
 
-  // Settings page
-  if (pathname === "/settings") {
-    return <SettingsTabs />;
-  }
+  // Object map pattern for rendering components based on path
+  const renderMap = {
+    settings: () => <SettingsTabs />,
 
-  // Chat page
-  if (pathname.startsWith("/chat") || pathname === "/") {
-    let currentActiveAgentId: string | null = searchParams.get("agentId");
-
-    if (
-      !currentActiveAgentId ||
-      (currentActiveAgentId &&
-        !installedAgents.find((agent) => agent.id === currentActiveAgentId))
-    ) {
-      const defaultJourneyMaster = installedAgents.find(
-        (agent) => agent.id === DEFAULT_AGENT_ID
+    chat: () => {
+      const finalAgentForDisplay = agentsData.find(
+        (agent) => agent.id === activeAgentId
       );
-      const firstInstalledAgent =
-        installedAgents.length > 0 ? installedAgents[0] : undefined;
+      const availableAgentsToSwitch = installedAgents.filter(
+        (agent) => agent.id !== activeAgentId
+      );
 
-      if (defaultJourneyMaster) {
-        currentActiveAgentId = defaultJourneyMaster.id;
-      } else if (firstInstalledAgent) {
-        currentActiveAgentId = firstInstalledAgent.id;
-      } else {
-        currentActiveAgentId = null;
-      }
+      return (
+        <AgentSelector
+          currentAgentId={activeAgentId}
+          finalAgentForDisplay={finalAgentForDisplay}
+          availableAgentsToSwitch={availableAgentsToSwitch}
+          isLoading={isLoading}
+        />
+      );
+    },
 
-      if (
-        currentActiveAgentId &&
-        currentActiveAgentId !== searchParams.get("agentId")
-      ) {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("agentId", currentActiveAgentId);
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-      }
+    explore: () => {
+      return isAgentDetailPage ? (
+        <h1
+          className="text-lg font-semibold truncate px-1 sm:px-2"
+          title={agentForTitle?.name}
+        >
+          {agentForTitle?.name}
+        </h1>
+      ) : (
+        <ExploreSearch />
+      );
+    },
+
+    default: () => (
+      <h1
+        className="text-lg font-semibold p-1 h-auto truncate"
+        title={basePageTitle}
+      >
+        {basePageTitle}
+      </h1>
+    ),
+  };
+
+  // Determine which render function to use
+  const getComponentToRender = () => {
+    if (pathname === "/settings") {
+      return renderMap.settings;
     }
 
-    const finalAgentForDisplay = agentsData.find(
-      (agent) => agent.id === currentActiveAgentId
-    );
-    const availableAgentsToSwitch = installedAgents.filter(
-      (agent) => agent.id !== currentActiveAgentId
-    );
+    if (isChatPath(pathname)) {
+      return renderMap.chat;
+    }
 
-    return (
-      <AgentSelector
-        currentAgentId={currentActiveAgentId}
-        finalAgentForDisplay={finalAgentForDisplay}
-        availableAgentsToSwitch={availableAgentsToSwitch}
-        isLoading={isLoading}
-      />
-    );
-  }
+    if (pathname === "/explore") {
+      return renderMap.explore;
+    }
 
-  // Agent detail page
-  if (isAgentDetailPage && agentForTitle) {
-    return (
-      <h1
-        className="text-lg font-semibold truncate px-1 sm:px-2"
-        title={agentForTitle.name}
-      >
-        {agentForTitle.name}
-      </h1>
-    );
-  }
+    if (isAgentDetailPage && agentForTitle) {
+      return () => (
+        <h1
+          className="text-lg font-semibold truncate px-1 sm:px-2"
+          title={agentForTitle.name}
+        >
+          {agentForTitle.name}
+        </h1>
+      );
+    }
 
-  // Explore page
-  if (pathname === "/explore" && !isAgentDetailPage) {
-    return <ExploreSearch />;
-  }
+    return renderMap.default;
+  };
 
-  // Default page title
-  return (
-    <h1
-      className="text-lg font-semibold p-1 h-auto truncate"
-      title={basePageTitle}
-    >
-      {basePageTitle}
-    </h1>
-  );
+  // Execute the appropriate render function
+  return getComponentToRender()();
 }
